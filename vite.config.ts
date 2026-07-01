@@ -3,7 +3,7 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
-  base: 'https://github.com/burrolag/world-cup-tracker',
+  base: '/world-cup-tracker/',
   test: {
     environment: "node",
     globals: true
