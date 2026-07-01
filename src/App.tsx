@@ -260,7 +260,7 @@ export function App() {
     <main className="app-shell">
       <section className="hero">
         <div>
-          <p className="eyebrow">Accela Gateway Services</p>
+          <p className="eyebrow"></p>
           <h1>World Cup Tracker</h1>
           <p className="hero-copy">
             Track knockout results, capture everyone&apos;s predictions, and score the pool round by round.
