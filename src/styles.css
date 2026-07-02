@@ -102,8 +102,7 @@ h2 {
 }
 
 .toolbar button,
-.add-person button,
-.add-team button {
+.add-person button {
   align-items: center;
   background: #13251d;
   border: 0;
@@ -114,8 +113,9 @@ h2 {
   padding: 0 14px;
 }
 
-.hidden-input {
-  display: none;
+.toolbar button:disabled {
+  background: #6f756f;
+  cursor: wait;
 }
 
 .sync-status {
@@ -151,6 +151,20 @@ h2 {
 .sync-error {
   background: #fff0f0;
   border-color: #d98f8f;
+}
+
+.results-status {
+  background: #eef6f2;
+  border: 1px solid #c8ddd2;
+  color: #315345;
+  margin: 0 0 18px;
+  padding: 10px 12px;
+}
+
+.results-status.error {
+  background: #fff0f0;
+  border-color: #d98f8f;
+  color: #8a2c2c;
 }
 
 .layout-grid {
@@ -305,6 +319,26 @@ select {
   text-transform: uppercase;
 }
 
+.match-teams.locked > div {
+  background: #f7f8f3;
+  border: 1px solid #dfe3d8;
+  display: grid;
+  gap: 3px;
+  min-height: 54px;
+  padding: 8px 10px;
+}
+
+.match-teams.locked span {
+  color: #6f756f;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.match-teams.locked strong {
+  overflow-wrap: anywhere;
+}
+
 .score-entry {
   display: grid;
   gap: 10px;
@@ -406,29 +440,6 @@ select {
   margin-bottom: 0;
 }
 
-.team-editor {
-  margin-top: 18px;
-}
-
-.add-team {
-  display: grid;
-  gap: 10px;
-  grid-template-columns: minmax(0, 1fr) 110px auto;
-  margin-bottom: 14px;
-}
-
-.team-list {
-  display: grid;
-  gap: 8px;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-}
-
-.team-row {
-  display: grid;
-  gap: 8px;
-  grid-template-columns: minmax(0, 1fr) 82px 34px;
-}
-
 @media (max-width: 1080px) {
   .layout-grid {
     grid-template-columns: 1fr;
@@ -457,8 +468,7 @@ select {
 
   .panel-heading,
   .match-topline,
-  .match-teams,
-  .add-team {
+  .match-teams {
     align-items: start;
     display: grid;
     grid-template-columns: 1fr;

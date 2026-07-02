@@ -1,8 +1,8 @@
-import { Download, Plus, RotateCcw, Trash2, Trophy, Upload } from "lucide-react";
-import { useMemo, useRef, useState } from "react";
+import { Plus, RotateCcw, Save, Trash2, Trophy } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
 import { roundLabels, roundPoints, seedState } from "./data/seed";
-import { parseBoardFile, serializeBoardFile } from "./lib/boardFile";
 import { advanceBracket } from "./lib/bracket";
+import { fetchOfficialResults, mergeOfficialResults } from "./lib/officialResults";
 import {
   availablePredictionTeamIds,
   isPredictionAllowed,
@@ -11,9 +11,9 @@ import {
   pruneInvalidPredictions
 } from "./lib/predictionBracket";
 import { calculateScores, upsertPrediction, winnerFromScore } from "./lib/scoring";
-import type { Match, Participant, Round, Team, TournamentState } from "./types";
+import type { Match, Participant, Round, TournamentState } from "./types";
 
-const storageKey = "world-cup-tracker-state-v2";
+const storageKey = "world-cup-tracker-state-v3";
 const orderedRounds: Round[] = ["round32", "round16", "quarterfinal", "semifinal", "final"];
 
 function readInitialState(): TournamentState {
@@ -54,36 +54,85 @@ function makeUniqueId(existingIds: string[], base: string) {
   return existingIds.includes(fallback) ? `${fallback}-${Date.now()}` : fallback;
 }
 
-function teamSelectOptions(state: TournamentState, selectedId: string) {
-  const hasSelectedTeam = state.teams.some((team) => team.id === selectedId);
-
-  return hasSelectedTeam || !selectedId
-    ? state.teams
-    : [{ id: selectedId, name: selectedId, code: selectedId.slice(0, 3).toUpperCase() }, ...state.teams];
-}
-
 export function App() {
   const [state, setState] = useState<TournamentState>(readInitialState);
   const [selectedRound, setSelectedRound] = useState<Round>("round32");
   const [activeParticipantId, setActiveParticipantId] = useState(state.participants[0]?.id ?? "");
   const [newParticipant, setNewParticipant] = useState("");
-  const [newTeamName, setNewTeamName] = useState("");
-  const [newTeamCode, setNewTeamCode] = useState("");
-  const [boardFileName, setBoardFileName] = useState("world-cup-tracker.json");
-  const [hasUnsavedFileChanges, setHasUnsavedFileChanges] = useState(false);
-  const [fileStatus, setFileStatus] = useState("Using browser cache. Upload or save a JSON board file to share.");
-  const [fileError, setFileError] = useState<string | null>(null);
-  const importRef = useRef<HTMLInputElement>(null);
+  const [hasUnsavedGitHubChanges, setHasUnsavedGitHubChanges] = useState(false);
+  const [saveStatus, setSaveStatus] = useState("Loaded from hosted board. Save changes to GitHub when edits are ready.");
+  const [saveError, setSaveError] = useState<string | null>(null);
+  const [isSavingToGitHub, setIsSavingToGitHub] = useState(false);
+  const [officialResultsStatus, setOfficialResultsStatus] = useState("Official scores not loaded yet.");
+  const [officialResultsError, setOfficialResultsError] = useState<string | null>(null);
 
   const scores = useMemo(() => calculateScores(state.matches, state.participants), [state]);
   const selectedMatches = state.matches.filter((match) => match.round === selectedRound);
 
+  function applyOfficialResults(nextState: TournamentState, markUnsaved = false) {
+    setState(nextState);
+    window.localStorage.setItem(storageKey, JSON.stringify(nextState));
+    if (markUnsaved) {
+      setHasUnsavedGitHubChanges(true);
+      setSaveStatus("Official scores changed the board. Save to GitHub to publish the latest board.");
+    }
+  }
+
+  async function refreshOfficialResults() {
+    try {
+      setOfficialResultsStatus("Loading official scores...");
+      const resultsFile = await fetchOfficialResults();
+      const nextState = mergeOfficialResults(state, resultsFile);
+
+      applyOfficialResults(nextState);
+      setOfficialResultsStatus(`Official scores updated ${new Date(resultsFile.lastUpdated).toLocaleString()}.`);
+      setOfficialResultsError(null);
+    } catch (error) {
+      setOfficialResultsStatus("Official scores could not be loaded.");
+      setOfficialResultsError(error instanceof Error ? error.message : "Unknown official results error.");
+    }
+  }
+
+  useEffect(() => {
+    void refreshOfficialResults();
+  }, []);
+
   function updateState(nextState: TournamentState) {
     setState(nextState);
     window.localStorage.setItem(storageKey, JSON.stringify(nextState));
-    setHasUnsavedFileChanges(true);
-    setFileStatus(`Changed in browser. Save ${boardFileName} to share the latest board.`);
-    setFileError(null);
+    setHasUnsavedGitHubChanges(true);
+    setSaveStatus("Changed in browser. Save to GitHub to publish this board.");
+    setSaveError(null);
+  }
+
+  async function saveBoardToGitHub() {
+    try {
+      setIsSavingToGitHub(true);
+      setSaveStatus("Saving board to GitHub...");
+      setSaveError(null);
+
+      const response = await fetch(
+        import.meta.env.VITE_BOARD_SAVE_ENDPOINT ?? "/api/world-cup/save-board",
+        {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ state })
+        }
+      );
+      const result = (await response.json().catch(() => null)) as { error?: string; commitUrl?: string } | null;
+
+      if (!response.ok) {
+        throw new Error(result?.error ?? `GitHub save failed with ${response.status}.`);
+      }
+
+      setHasUnsavedGitHubChanges(false);
+      setSaveStatus(result?.commitUrl ? `Saved to GitHub: ${result.commitUrl}` : "Saved to GitHub.");
+    } catch (error) {
+      setSaveStatus("GitHub save failed.");
+      setSaveError(error instanceof Error ? error.message : "Unknown GitHub save error.");
+    } finally {
+      setIsSavingToGitHub(false);
+    }
   }
 
   function updateMatch(matchId: string, patch: Partial<Match>) {
@@ -171,91 +220,6 @@ export function App() {
     }
   }
 
-  function addTeam() {
-    const name = newTeamName.trim();
-
-    if (!name) {
-      return;
-    }
-
-    const code = (newTeamCode.trim() || name.slice(0, 3)).toUpperCase();
-    const team: Team = {
-      id: makeUniqueId(
-        state.teams.map((candidate) => candidate.id),
-        slugify(code || name)
-      ),
-      name,
-      code
-    };
-
-    updateState({ ...state, teams: [...state.teams, team] });
-    setNewTeamName("");
-    setNewTeamCode("");
-  }
-
-  function updateTeam(teamId: string, patch: Partial<Team>) {
-    updateState({
-      ...state,
-      teams: state.teams.map((team) => (team.id === teamId ? { ...team, ...patch } : team))
-    });
-  }
-
-  function deleteTeam(teamId: string) {
-    updateState({
-      ...state,
-      teams: state.teams.filter((team) => team.id !== teamId),
-      matches: state.matches.map((match) => ({
-        ...match,
-        homeTeamId: match.homeTeamId === teamId ? "" : match.homeTeamId,
-        awayTeamId: match.awayTeamId === teamId ? "" : match.awayTeamId,
-        winnerTeamId: match.winnerTeamId === teamId ? null : match.winnerTeamId
-      })),
-      participants: state.participants.map((participant) => ({
-        ...participant,
-        predictions: participant.predictions.map((prediction) =>
-          prediction.winnerTeamId === teamId ? { ...prediction, winnerTeamId: null } : prediction
-        )
-      }))
-    });
-  }
-
-  function resetState() {
-    updateState(seedState);
-    setActiveParticipantId(seedState.participants[0]?.id ?? "");
-    setBoardFileName("world-cup-tracker.json");
-  }
-
-  function exportState() {
-    const blob = new Blob([serializeBoardFile(state)], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = boardFileName;
-    link.click();
-    URL.revokeObjectURL(url);
-    setHasUnsavedFileChanges(false);
-    setFileStatus(`Downloaded ${boardFileName}. Share that file to carry these updates forward.`);
-    setFileError(null);
-  }
-
-  async function importState(file: File) {
-    try {
-      const content = await file.text();
-      const importedState = parseBoardFile(content);
-
-      setState(importedState);
-      setActiveParticipantId(importedState.participants[0]?.id ?? "");
-      setBoardFileName(file.name || "world-cup-tracker.json");
-      setHasUnsavedFileChanges(false);
-      setFileStatus(`Loaded ${file.name}. Edits will stay in browser until you save the JSON file again.`);
-      setFileError(null);
-      window.localStorage.setItem(storageKey, JSON.stringify(importedState));
-    } catch (error) {
-      setFileError(error instanceof Error ? error.message : "The selected file could not be imported.");
-      setFileStatus("Import failed");
-    }
-  }
-
   return (
     <main className="app-shell">
       <section className="hero">
@@ -274,37 +238,25 @@ export function App() {
       </section>
 
       <section className="toolbar" aria-label="Tracker actions">
-        <button type="button" onClick={exportState}>
-          <Download size={18} aria-hidden="true" />
-          Save JSON
+        <button type="button" onClick={() => void saveBoardToGitHub()} disabled={isSavingToGitHub}>
+          <Save size={18} aria-hidden="true" />
+          {isSavingToGitHub ? "Saving..." : "Save to GitHub"}
         </button>
-        <button type="button" onClick={() => importRef.current?.click()}>
-          <Upload size={18} aria-hidden="true" />
-          Upload JSON
-        </button>
-        <button type="button" onClick={resetState}>
+        <button type="button" onClick={() => void refreshOfficialResults()}>
           <RotateCcw size={18} aria-hidden="true" />
-          Reset
+          Refresh Scores
         </button>
-        <input
-          ref={importRef}
-          className="hidden-input"
-          type="file"
-          accept="application/json"
-          onChange={(event) => {
-            const file = event.target.files?.[0];
-            if (file) {
-              void importState(file);
-            }
-          }}
-        />
-        <div className={`sync-status ${fileError ? "error" : ""}`} role="status">
-          <strong>{hasUnsavedFileChanges ? "Unsaved JSON changes" : "JSON file ready"}</strong>
-          <span>{fileStatus}</span>
+        <div className={`sync-status ${saveError ? "error" : ""}`} role="status">
+          <strong>{hasUnsavedGitHubChanges ? "Unsaved GitHub changes" : "GitHub board current"}</strong>
+          <span>{saveStatus}</span>
         </div>
       </section>
 
-      {fileError ? <p className="sync-error">File issue: {fileError}</p> : null}
+      {saveError ? <p className="sync-error">GitHub save issue: {saveError}</p> : null}
+      <p className={`results-status ${officialResultsError ? "error" : ""}`}>
+        {officialResultsStatus}
+        {officialResultsError ? ` ${officialResultsError}` : ""}
+      </p>
 
       <section className="layout-grid">
         <aside className="panel leaderboard">
@@ -390,45 +342,15 @@ export function App() {
                     onChange={(event) => updateMatch(match.id, { date: event.target.value })}
                   />
                 </div>
-                <div className="match-teams">
-                  <label>
-                    Team 1
-                    <select
-                      value={match.homeTeamId}
-                      onChange={(event) =>
-                        updateMatch(match.id, {
-                          homeTeamId: event.target.value,
-                          winnerTeamId: match.winnerTeamId === match.homeTeamId ? null : match.winnerTeamId
-                        })
-                      }
-                    >
-                      <option value="">Select team</option>
-                      {teamSelectOptions(state, match.homeTeamId).map((team) => (
-                        <option key={team.id} value={team.id}>
-                          {team.name}
-                        </option>
-                      ))}
-                    </select>
-                  </label>
-                  <label>
-                    Team 2
-                    <select
-                      value={match.awayTeamId}
-                      onChange={(event) =>
-                        updateMatch(match.id, {
-                          awayTeamId: event.target.value,
-                          winnerTeamId: match.winnerTeamId === match.awayTeamId ? null : match.winnerTeamId
-                        })
-                      }
-                    >
-                      <option value="">Select team</option>
-                      {teamSelectOptions(state, match.awayTeamId).map((team) => (
-                        <option key={team.id} value={team.id}>
-                          {team.name}
-                        </option>
-                      ))}
-                    </select>
-                  </label>
+                <div className="match-teams locked">
+                  <div>
+                    <span>Team 1</span>
+                    <strong>{teamName(state, match.homeTeamId)}</strong>
+                  </div>
+                  <div>
+                    <span>Team 2</span>
+                    <strong>{teamName(state, match.awayTeamId)}</strong>
+                  </div>
                 </div>
                 <div className="score-entry">
                   {matchOptions(state, match).map((option, index) => (
@@ -534,7 +456,7 @@ export function App() {
                         ))}
                       </div>
                     ) : (
-                      <p className="empty-state">Set teams for this match before assigning predictions.</p>
+                      <p className="empty-state">Teams are not available for this match yet.</p>
                     )}
                   </article>
                 );
@@ -544,60 +466,6 @@ export function App() {
             <p className="empty-state">Add a person to start tracking predictions.</p>
           )}
         </section>
-      </section>
-
-      <section className="panel team-editor">
-        <div className="panel-heading">
-          <h2>Teams</h2>
-          <span className="muted">Add or rename teams used in match pairings</span>
-        </div>
-        <div className="add-team">
-          <input
-            aria-label="New team name"
-            placeholder="Team name"
-            value={newTeamName}
-            onChange={(event) => setNewTeamName(event.target.value)}
-          />
-          <input
-            aria-label="New team code"
-            placeholder="Code"
-            value={newTeamCode}
-            onChange={(event) => setNewTeamCode(event.target.value)}
-            onKeyDown={(event) => {
-              if (event.key === "Enter") {
-                addTeam();
-              }
-            }}
-          />
-          <button type="button" onClick={addTeam}>
-            <Plus size={18} aria-hidden="true" />
-            Add
-          </button>
-        </div>
-        <div className="team-list">
-          {state.teams.map((team) => (
-            <article className="team-row" key={team.id}>
-              <input
-                aria-label={`${team.name} name`}
-                value={team.name}
-                onChange={(event) => updateTeam(team.id, { name: event.target.value })}
-              />
-              <input
-                aria-label={`${team.name} code`}
-                value={team.code}
-                onChange={(event) => updateTeam(team.id, { code: event.target.value.toUpperCase() })}
-              />
-              <button
-                className="icon-button danger"
-                type="button"
-                aria-label={`Remove ${team.name}`}
-                onClick={() => deleteTeam(team.id)}
-              >
-                <Trash2 size={16} aria-hidden="true" />
-              </button>
-            </article>
-          ))}
-        </div>
       </section>
     </main>
   );

@@ -1,0 +1,1770 @@
+{
+  "teams": [
+    {
+      "id": "algeria",
+      "name": "Algeria",
+      "code": "ALG"
+    },
+    {
+      "id": "argentina",
+      "name": "Argentina",
+      "code": "ARG"
+    },
+    {
+      "id": "australia",
+      "name": "Australia",
+      "code": "AUS"
+    },
+    {
+      "id": "austria",
+      "name": "Austria",
+      "code": "AUT"
+    },
+    {
+      "id": "belgium",
+      "name": "Belgium",
+      "code": "BEL"
+    },
+    {
+      "id": "bosnia-herzegovina",
+      "name": "Bosnia and Herzegovina",
+      "code": "BIH"
+    },
+    {
+      "id": "brazil",
+      "name": "Brazil",
+      "code": "BRA"
+    },
+    {
+      "id": "cabo-verde",
+      "name": "Cabo Verde",
+      "code": "CPV"
+    },
+    {
+      "id": "canada",
+      "name": "Canada",
+      "code": "CAN"
+    },
+    {
+      "id": "colombia",
+      "name": "Colombia",
+      "code": "COL"
+    },
+    {
+      "id": "croatia",
+      "name": "Croatia",
+      "code": "CRO"
+    },
+    {
+      "id": "dr-congo",
+      "name": "DR Congo",
+      "code": "COD"
+    },
+    {
+      "id": "ecuador",
+      "name": "Ecuador",
+      "code": "ECU"
+    },
+    {
+      "id": "egypt",
+      "name": "Egypt",
+      "code": "EGY"
+    },
+    {
+      "id": "england",
+      "name": "England",
+      "code": "ENG"
+    },
+    {
+      "id": "france",
+      "name": "France",
+      "code": "FRA"
+    },
+    {
+      "id": "germany",
+      "name": "Germany",
+      "code": "GER"
+    },
+    {
+      "id": "ghana",
+      "name": "Ghana",
+      "code": "GHA"
+    },
+    {
+      "id": "ivory-coast",
+      "name": "Ivory Coast",
+      "code": "CIV"
+    },
+    {
+      "id": "japan",
+      "name": "Japan",
+      "code": "JPN"
+    },
+    {
+      "id": "mexico",
+      "name": "Mexico",
+      "code": "MEX"
+    },
+    {
+      "id": "morocco",
+      "name": "Morocco",
+      "code": "MAR"
+    },
+    {
+      "id": "netherlands",
+      "name": "Netherlands",
+      "code": "NED"
+    },
+    {
+      "id": "norway",
+      "name": "Norway",
+      "code": "NOR"
+    },
+    {
+      "id": "paraguay",
+      "name": "Paraguay",
+      "code": "PAR"
+    },
+    {
+      "id": "portugal",
+      "name": "Portugal",
+      "code": "POR"
+    },
+    {
+      "id": "senegal",
+      "name": "Senegal",
+      "code": "SEN"
+    },
+    {
+      "id": "south-africa",
+      "name": "South Africa",
+      "code": "RSA"
+    },
+    {
+      "id": "spain",
+      "name": "Spain",
+      "code": "ESP"
+    },
+    {
+      "id": "sweden",
+      "name": "Sweden",
+      "code": "SWE"
+    },
+    {
+      "id": "switzerland",
+      "name": "Switzerland",
+      "code": "SUI"
+    },
+    {
+      "id": "united-states",
+      "name": "United States",
+      "code": "USA"
+    }
+  ],
+  "matches": [
+    {
+      "id": "m74",
+      "round": "round32",
+      "label": "Match 74",
+      "slot": 1,
+      "homeTeamId": "germany",
+      "awayTeamId": "paraguay",
+      "homeScore": 1,
+      "awayScore": 1,
+      "winnerTeamId": "paraguay",
+      "date": "2026-06-29",
+      "nextMatchId": "m89",
+      "nextMatchSide": "home"
+    },
+    {
+      "id": "m77",
+      "round": "round32",
+      "label": "Match 77",
+      "slot": 2,
+      "homeTeamId": "france",
+      "awayTeamId": "sweden",
+      "homeScore": 3,
+      "awayScore": 0,
+      "winnerTeamId": "france",
+      "date": "2026-06-30",
+      "nextMatchId": "m89",
+      "nextMatchSide": "away"
+    },
+    {
+      "id": "m73",
+      "round": "round32",
+      "label": "Match 73",
+      "slot": 3,
+      "homeTeamId": "south-africa",
+      "awayTeamId": "canada",
+      "homeScore": 0,
+      "awayScore": 1,
+      "winnerTeamId": "canada",
+      "date": "2026-06-28",
+      "nextMatchId": "m90",
+      "nextMatchSide": "home"
+    },
+    {
+      "id": "m75",
+      "round": "round32",
+      "label": "Match 75",
+      "slot": 4,
+      "homeTeamId": "netherlands",
+      "awayTeamId": "morocco",
+      "homeScore": 1,
+      "awayScore": 1,
+      "winnerTeamId": "morocco",
+      "date": "2026-06-29",
+      "nextMatchId": "m90",
+      "nextMatchSide": "away"
+    },
+    {
+      "id": "m83",
+      "round": "round32",
+      "label": "Match 83",
+      "slot": 5,
+      "homeTeamId": "portugal",
+      "awayTeamId": "croatia",
+      "homeScore": null,
+      "awayScore": null,
+      "winnerTeamId": null,
+      "date": "2026-07-02",
+      "nextMatchId": "m93",
+      "nextMatchSide": "home"
+    },
+    {
+      "id": "m84",
+      "round": "round32",
+      "label": "Match 84",
+      "slot": 6,
+      "homeTeamId": "spain",
+      "awayTeamId": "austria",
+      "homeScore": null,
+      "awayScore": null,
+      "winnerTeamId": null,
+      "date": "2026-07-02",
+      "nextMatchId": "m93",
+      "nextMatchSide": "away"
+    },
+    {
+      "id": "m81",
+      "round": "round32",
+      "label": "Match 81",
+      "slot": 7,
+      "homeTeamId": "united-states",
+      "awayTeamId": "bosnia-herzegovina",
+      "homeScore": null,
+      "awayScore": null,
+      "winnerTeamId": null,
+      "date": "2026-07-01",
+      "nextMatchId": "m94",
+      "nextMatchSide": "home"
+    },
+    {
+      "id": "m82",
+      "round": "round32",
+      "label": "Match 82",
+      "slot": 8,
+      "homeTeamId": "belgium",
+      "awayTeamId": "senegal",
+      "homeScore": null,
+      "awayScore": null,
+      "winnerTeamId": null,
+      "date": "2026-07-01",
+      "nextMatchId": "m94",
+      "nextMatchSide": "away"
+    },
+    {
+      "id": "m76",
+      "round": "round32",
+      "label": "Match 76",
+      "slot": 9,
+      "homeTeamId": "brazil",
+      "awayTeamId": "japan",
+      "homeScore": 2,
+      "awayScore": 1,
+      "winnerTeamId": "brazil",
+      "date": "2026-06-29",
+      "nextMatchId": "m91",
+      "nextMatchSide": "home"
+    },
+    {
+      "id": "m78",
+      "round": "round32",
+      "label": "Match 78",
+      "slot": 10,
+      "homeTeamId": "ivory-coast",
+      "awayTeamId": "norway",
+      "homeScore": 1,
+      "awayScore": 2,
+      "winnerTeamId": "norway",
+      "date": "2026-06-30",
+      "nextMatchId": "m91",
+      "nextMatchSide": "away"
+    },
+    {
+      "id": "m79",
+      "round": "round32",
+      "label": "Match 79",
+      "slot": 11,
+      "homeTeamId": "mexico",
+      "awayTeamId": "ecuador",
+      "homeScore": 2,
+      "awayScore": 0,
+      "winnerTeamId": "mexico",
+      "date": "2026-06-30",
+      "nextMatchId": "m92",
+      "nextMatchSide": "home"
+    },
+    {
+      "id": "m80",
+      "round": "round32",
+      "label": "Match 80",
+      "slot": 12,
+      "homeTeamId": "england",
+      "awayTeamId": "dr-congo",
+      "homeScore": 2,
+      "awayScore": 1,
+      "winnerTeamId": "england",
+      "date": "2026-07-01",
+      "nextMatchId": "m92",
+      "nextMatchSide": "away"
+    },
+    {
+      "id": "m86",
+      "round": "round32",
+      "label": "Match 86",
+      "slot": 13,
+      "homeTeamId": "argentina",
+      "awayTeamId": "cabo-verde",
+      "homeScore": null,
+      "awayScore": null,
+      "winnerTeamId": null,
+      "date": "2026-07-03",
+      "nextMatchId": "m95",
+      "nextMatchSide": "home"
+    },
+    {
+      "id": "m88",
+      "round": "round32",
+      "label": "Match 88",
+      "slot": 14,
+      "homeTeamId": "australia",
+      "awayTeamId": "egypt",
+      "homeScore": null,
+      "awayScore": null,
+      "winnerTeamId": null,
+      "date": "2026-07-03",
+      "nextMatchId": "m95",
+      "nextMatchSide": "away"
+    },
+    {
+      "id": "m85",
+      "round": "round32",
+      "label": "Match 85",
+      "slot": 15,
+      "homeTeamId": "switzerland",
+      "awayTeamId": "algeria",
+      "homeScore": null,
+      "awayScore": null,
+      "winnerTeamId": null,
+      "date": "2026-07-02",
+      "nextMatchId": "m96",
+      "nextMatchSide": "home"
+    },
+    {
+      "id": "m87",
+      "round": "round32",
+      "label": "Match 87",
+      "slot": 16,
+      "homeTeamId": "colombia",
+      "awayTeamId": "ghana",
+      "homeScore": null,
+      "awayScore": null,
+      "winnerTeamId": null,
+      "date": "2026-07-03",
+      "nextMatchId": "m96",
+      "nextMatchSide": "away"
+    },
+    {
+      "id": "m89",
+      "round": "round16",
+      "label": "Match 89",
+      "slot": 1,
+      "homeTeamId": "paraguay",
+      "awayTeamId": "france",
+      "homeScore": null,
+      "awayScore": null,
+      "winnerTeamId": null,
+      "date": "2026-07-04",
+      "nextMatchId": "m97",
+      "nextMatchSide": "home"
+    },
+    {
+      "id": "m90",
+      "round": "round16",
+      "label": "Match 90",
+      "slot": 2,
+      "homeTeamId": "canada",
+      "awayTeamId": "morocco",
+      "homeScore": null,
+      "awayScore": null,
+      "winnerTeamId": null,
+      "date": "2026-07-04",
+      "nextMatchId": "m97",
+      "nextMatchSide": "away"
+    },
+    {
+      "id": "m93",
+      "round": "round16",
+      "label": "Match 93",
+      "slot": 3,
+      "homeTeamId": "",
+      "awayTeamId": "",
+      "homeScore": null,
+      "awayScore": null,
+      "winnerTeamId": null,
+      "date": "2026-07-06",
+      "nextMatchId": "m98",
+      "nextMatchSide": "home"
+    },
+    {
+      "id": "m94",
+      "round": "round16",
+      "label": "Match 94",
+      "slot": 4,
+      "homeTeamId": "",
+      "awayTeamId": "",
+      "homeScore": null,
+      "awayScore": null,
+      "winnerTeamId": null,
+      "date": "2026-07-06",
+      "nextMatchId": "m98",
+      "nextMatchSide": "away"
+    },
+    {
+      "id": "m91",
+      "round": "round16",
+      "label": "Match 91",
+      "slot": 5,
+      "homeTeamId": "brazil",
+      "awayTeamId": "norway",
+      "homeScore": null,
+      "awayScore": null,
+      "winnerTeamId": null,
+      "date": "2026-07-05",
+      "nextMatchId": "m99",
+      "nextMatchSide": "home"
+    },
+    {
+      "id": "m92",
+      "round": "round16",
+      "label": "Match 92",
+      "slot": 6,
+      "homeTeamId": "mexico",
+      "awayTeamId": "england",
+      "homeScore": null,
+      "awayScore": null,
+      "winnerTeamId": null,
+      "date": "2026-07-05",
+      "nextMatchId": "m99",
+      "nextMatchSide": "away"
+    },
+    {
+      "id": "m95",
+      "round": "round16",
+      "label": "Match 95",
+      "slot": 7,
+      "homeTeamId": "",
+      "awayTeamId": "",
+      "homeScore": null,
+      "awayScore": null,
+      "winnerTeamId": null,
+      "date": "2026-07-07",
+      "nextMatchId": "m100",
+      "nextMatchSide": "home"
+    },
+    {
+      "id": "m96",
+      "round": "round16",
+      "label": "Match 96",
+      "slot": 8,
+      "homeTeamId": "",
+      "awayTeamId": "",
+      "homeScore": null,
+      "awayScore": null,
+      "winnerTeamId": null,
+      "date": "2026-07-07",
+      "nextMatchId": "m100",
+      "nextMatchSide": "away"
+    },
+    {
+      "id": "m97",
+      "round": "quarterfinal",
+      "label": "Match 97",
+      "slot": 1,
+      "homeTeamId": "",
+      "awayTeamId": "",
+      "homeScore": null,
+      "awayScore": null,
+      "winnerTeamId": null,
+      "date": "2026-07-09",
+      "nextMatchId": "m101",
+      "nextMatchSide": "home"
+    },
+    {
+      "id": "m98",
+      "round": "quarterfinal",
+      "label": "Match 98",
+      "slot": 2,
+      "homeTeamId": "",
+      "awayTeamId": "",
+      "homeScore": null,
+      "awayScore": null,
+      "winnerTeamId": null,
+      "date": "2026-07-10",
+      "nextMatchId": "m101",
+      "nextMatchSide": "away"
+    },
+    {
+      "id": "m99",
+      "round": "quarterfinal",
+      "label": "Match 99",
+      "slot": 3,
+      "homeTeamId": "",
+      "awayTeamId": "",
+      "homeScore": null,
+      "awayScore": null,
+      "winnerTeamId": null,
+      "date": "2026-07-10",
+      "nextMatchId": "m102",
+      "nextMatchSide": "home"
+    },
+    {
+      "id": "m100",
+      "round": "quarterfinal",
+      "label": "Match 100",
+      "slot": 4,
+      "homeTeamId": "",
+      "awayTeamId": "",
+      "homeScore": null,
+      "awayScore": null,
+      "winnerTeamId": null,
+      "date": "2026-07-11",
+      "nextMatchId": "m102",
+      "nextMatchSide": "away"
+    },
+    {
+      "id": "m101",
+      "round": "semifinal",
+      "label": "Match 101",
+      "slot": 1,
+      "homeTeamId": "",
+      "awayTeamId": "",
+      "homeScore": null,
+      "awayScore": null,
+      "winnerTeamId": null,
+      "date": "2026-07-14",
+      "nextMatchId": "m104",
+      "nextMatchSide": "home"
+    },
+    {
+      "id": "m102",
+      "round": "semifinal",
+      "label": "Match 102",
+      "slot": 2,
+      "homeTeamId": "",
+      "awayTeamId": "",
+      "homeScore": null,
+      "awayScore": null,
+      "winnerTeamId": null,
+      "date": "2026-07-15",
+      "nextMatchId": "m104",
+      "nextMatchSide": "away"
+    },
+    {
+      "id": "m104",
+      "round": "final",
+      "label": "Final",
+      "slot": 1,
+      "homeTeamId": "",
+      "awayTeamId": "",
+      "homeScore": null,
+      "awayScore": null,
+      "winnerTeamId": null,
+      "date": "2026-07-19"
+    }
+  ],
+  "participants": [
+    {
+      "id": "gabo",
+      "name": "Gabo",
+      "predictions": [
+        {
+          "matchId": "m74",
+          "winnerTeamId": "germany"
+        },
+        {
+          "matchId": "m77",
+          "winnerTeamId": "france"
+        },
+        {
+          "matchId": "m73",
+          "winnerTeamId": "canada"
+        },
+        {
+          "matchId": "m75",
+          "winnerTeamId": "morocco"
+        },
+        {
+          "matchId": "m83",
+          "winnerTeamId": "portugal"
+        },
+        {
+          "matchId": "m84",
+          "winnerTeamId": "spain"
+        },
+        {
+          "matchId": "m81",
+          "winnerTeamId": "united-states"
+        },
+        {
+          "matchId": "m82",
+          "winnerTeamId": "senegal"
+        },
+        {
+          "matchId": "m76",
+          "winnerTeamId": "japan"
+        },
+        {
+          "matchId": "m78",
+          "winnerTeamId": "norway"
+        },
+        {
+          "matchId": "m79",
+          "winnerTeamId": "mexico"
+        },
+        {
+          "matchId": "m80",
+          "winnerTeamId": "england"
+        },
+        {
+          "matchId": "m86",
+          "winnerTeamId": "argentina"
+        },
+        {
+          "matchId": "m88",
+          "winnerTeamId": "egypt"
+        },
+        {
+          "matchId": "m85",
+          "winnerTeamId": "switzerland"
+        },
+        {
+          "matchId": "m87",
+          "winnerTeamId": "colombia"
+        },
+        {
+          "matchId": "m89",
+          "winnerTeamId": "france"
+        },
+        {
+          "matchId": "m90",
+          "winnerTeamId": "morocco"
+        },
+        {
+          "matchId": "m93",
+          "winnerTeamId": "spain"
+        },
+        {
+          "matchId": "m94",
+          "winnerTeamId": "senegal"
+        },
+        {
+          "matchId": "m91",
+          "winnerTeamId": "japan"
+        },
+        {
+          "matchId": "m92",
+          "winnerTeamId": "england"
+        },
+        {
+          "matchId": "m95",
+          "winnerTeamId": "egypt"
+        },
+        {
+          "matchId": "m96",
+          "winnerTeamId": "argentina"
+        },
+        {
+          "matchId": "m97",
+          "winnerTeamId": "france"
+        },
+        {
+          "matchId": "m98",
+          "winnerTeamId": "spain"
+        },
+        {
+          "matchId": "m99",
+          "winnerTeamId": "england"
+        },
+        {
+          "matchId": "m100",
+          "winnerTeamId": "argentina"
+        },
+        {
+          "matchId": "m101",
+          "winnerTeamId": "spain"
+        },
+        {
+          "matchId": "m102",
+          "winnerTeamId": "argentina"
+        },
+        {
+          "matchId": "m104",
+          "winnerTeamId": "spain"
+        }
+      ]
+    },
+    {
+      "id": "dianita",
+      "name": "Dianita",
+      "predictions": [
+        {
+          "matchId": "m74",
+          "winnerTeamId": "germany"
+        },
+        {
+          "matchId": "m77",
+          "winnerTeamId": "france"
+        },
+        {
+          "matchId": "m73",
+          "winnerTeamId": "canada"
+        },
+        {
+          "matchId": "m75",
+          "winnerTeamId": "netherlands"
+        },
+        {
+          "matchId": "m83",
+          "winnerTeamId": "portugal"
+        },
+        {
+          "matchId": "m84",
+          "winnerTeamId": "spain"
+        },
+        {
+          "matchId": "m81",
+          "winnerTeamId": "united-states"
+        },
+        {
+          "matchId": "m82",
+          "winnerTeamId": "senegal"
+        },
+        {
+          "matchId": "m76",
+          "winnerTeamId": "brazil"
+        },
+        {
+          "matchId": "m78",
+          "winnerTeamId": "norway"
+        },
+        {
+          "matchId": "m79",
+          "winnerTeamId": "mexico"
+        },
+        {
+          "matchId": "m80",
+          "winnerTeamId": "england"
+        },
+        {
+          "matchId": "m86",
+          "winnerTeamId": "argentina"
+        },
+        {
+          "matchId": "m88",
+          "winnerTeamId": "egypt"
+        },
+        {
+          "matchId": "m85",
+          "winnerTeamId": "switzerland"
+        },
+        {
+          "matchId": "m87",
+          "winnerTeamId": "colombia"
+        },
+        {
+          "matchId": "m89",
+          "winnerTeamId": "france"
+        },
+        {
+          "matchId": "m90",
+          "winnerTeamId": "netherlands"
+        },
+        {
+          "matchId": "m93",
+          "winnerTeamId": "spain"
+        },
+        {
+          "matchId": "m94",
+          "winnerTeamId": "united-states"
+        },
+        {
+          "matchId": "m91",
+          "winnerTeamId": "brazil"
+        },
+        {
+          "matchId": "m92",
+          "winnerTeamId": "england"
+        },
+        {
+          "matchId": "m95",
+          "winnerTeamId": "argentina"
+        },
+        {
+          "matchId": "m96",
+          "winnerTeamId": "colombia"
+        },
+        {
+          "matchId": "m97",
+          "winnerTeamId": "france"
+        },
+        {
+          "matchId": "m98",
+          "winnerTeamId": "spain"
+        },
+        {
+          "matchId": "m99",
+          "winnerTeamId": "england"
+        },
+        {
+          "matchId": "m100",
+          "winnerTeamId": "argentina"
+        },
+        {
+          "matchId": "m101",
+          "winnerTeamId": "france"
+        },
+        {
+          "matchId": "m102",
+          "winnerTeamId": "argentina"
+        },
+        {
+          "matchId": "m104",
+          "winnerTeamId": "france"
+        }
+      ]
+    },
+    {
+      "id": "kanji",
+      "name": "Kanji",
+      "predictions": [
+        {
+          "matchId": "m74",
+          "winnerTeamId": "germany"
+        },
+        {
+          "matchId": "m77",
+          "winnerTeamId": "france"
+        },
+        {
+          "matchId": "m73",
+          "winnerTeamId": "south-africa"
+        },
+        {
+          "matchId": "m75",
+          "winnerTeamId": "netherlands"
+        },
+        {
+          "matchId": "m83",
+          "winnerTeamId": "croatia"
+        },
+        {
+          "matchId": "m84",
+          "winnerTeamId": "spain"
+        },
+        {
+          "matchId": "m81",
+          "winnerTeamId": "united-states"
+        },
+        {
+          "matchId": "m82",
+          "winnerTeamId": "senegal"
+        },
+        {
+          "matchId": "m76",
+          "winnerTeamId": "japan"
+        },
+        {
+          "matchId": "m78",
+          "winnerTeamId": "norway"
+        },
+        {
+          "matchId": "m79",
+          "winnerTeamId": "mexico"
+        },
+        {
+          "matchId": "m80",
+          "winnerTeamId": "england"
+        },
+        {
+          "matchId": "m86",
+          "winnerTeamId": "argentina"
+        },
+        {
+          "matchId": "m88",
+          "winnerTeamId": "egypt"
+        },
+        {
+          "matchId": "m85",
+          "winnerTeamId": "switzerland"
+        },
+        {
+          "matchId": "m87",
+          "winnerTeamId": "colombia"
+        },
+        {
+          "matchId": "m89",
+          "winnerTeamId": "france"
+        },
+        {
+          "matchId": "m90",
+          "winnerTeamId": "south-africa"
+        },
+        {
+          "matchId": "m93",
+          "winnerTeamId": "spain"
+        },
+        {
+          "matchId": "m94",
+          "winnerTeamId": "senegal"
+        },
+        {
+          "matchId": "m91",
+          "winnerTeamId": "japan"
+        },
+        {
+          "matchId": "m92",
+          "winnerTeamId": "england"
+        },
+        {
+          "matchId": "m95",
+          "winnerTeamId": "argentina"
+        },
+        {
+          "matchId": "m96",
+          "winnerTeamId": "switzerland"
+        },
+        {
+          "matchId": "m97",
+          "winnerTeamId": "france"
+        },
+        {
+          "matchId": "m98",
+          "winnerTeamId": "england"
+        },
+        {
+          "matchId": "m99",
+          "winnerTeamId": "spain"
+        },
+        {
+          "matchId": "m100",
+          "winnerTeamId": "argentina"
+        },
+        {
+          "matchId": "m101",
+          "winnerTeamId": "france"
+        },
+        {
+          "matchId": "m102",
+          "winnerTeamId": "argentina"
+        },
+        {
+          "matchId": "m104",
+          "winnerTeamId": "france"
+        }
+      ]
+    },
+    {
+      "id": "max",
+      "name": "Max",
+      "predictions": [
+        {
+          "matchId": "m74",
+          "winnerTeamId": "germany"
+        },
+        {
+          "matchId": "m77",
+          "winnerTeamId": "france"
+        },
+        {
+          "matchId": "m73",
+          "winnerTeamId": "canada"
+        },
+        {
+          "matchId": "m75",
+          "winnerTeamId": "netherlands"
+        },
+        {
+          "matchId": "m83",
+          "winnerTeamId": "portugal"
+        },
+        {
+          "matchId": "m84",
+          "winnerTeamId": "spain"
+        },
+        {
+          "matchId": "m81",
+          "winnerTeamId": "united-states"
+        },
+        {
+          "matchId": "m82",
+          "winnerTeamId": "belgium"
+        },
+        {
+          "matchId": "m76",
+          "winnerTeamId": "brazil"
+        },
+        {
+          "matchId": "m78",
+          "winnerTeamId": "norway"
+        },
+        {
+          "matchId": "m79",
+          "winnerTeamId": "mexico"
+        },
+        {
+          "matchId": "m80",
+          "winnerTeamId": "england"
+        },
+        {
+          "matchId": "m86",
+          "winnerTeamId": "argentina"
+        },
+        {
+          "matchId": "m88",
+          "winnerTeamId": "egypt"
+        },
+        {
+          "matchId": "m85",
+          "winnerTeamId": "algeria"
+        },
+        {
+          "matchId": "m87",
+          "winnerTeamId": "colombia"
+        },
+        {
+          "matchId": "m89",
+          "winnerTeamId": "france"
+        },
+        {
+          "matchId": "m90",
+          "winnerTeamId": "canada"
+        },
+        {
+          "matchId": "m93",
+          "winnerTeamId": "spain"
+        },
+        {
+          "matchId": "m94",
+          "winnerTeamId": "belgium"
+        },
+        {
+          "matchId": "m91",
+          "winnerTeamId": "brazil"
+        },
+        {
+          "matchId": "m92",
+          "winnerTeamId": "mexico"
+        },
+        {
+          "matchId": "m95",
+          "winnerTeamId": "argentina"
+        },
+        {
+          "matchId": "m96",
+          "winnerTeamId": "algeria"
+        },
+        {
+          "matchId": "m97",
+          "winnerTeamId": "france"
+        },
+        {
+          "matchId": "m98",
+          "winnerTeamId": "brazil"
+        },
+        {
+          "matchId": "m99",
+          "winnerTeamId": "spain"
+        },
+        {
+          "matchId": "m100",
+          "winnerTeamId": "argentina"
+        },
+        {
+          "matchId": "m101",
+          "winnerTeamId": "france"
+        },
+        {
+          "matchId": "m102",
+          "winnerTeamId": "brazil"
+        },
+        {
+          "matchId": "m104",
+          "winnerTeamId": "france"
+        }
+      ]
+    },
+    {
+      "id": "boby",
+      "name": "Boby",
+      "predictions": [
+        {
+          "matchId": "m74",
+          "winnerTeamId": "germany"
+        },
+        {
+          "matchId": "m77",
+          "winnerTeamId": "france"
+        },
+        {
+          "matchId": "m73",
+          "winnerTeamId": "canada"
+        },
+        {
+          "matchId": "m75",
+          "winnerTeamId": "morocco"
+        },
+        {
+          "matchId": "m83",
+          "winnerTeamId": "portugal"
+        },
+        {
+          "matchId": "m84",
+          "winnerTeamId": "spain"
+        },
+        {
+          "matchId": "m81",
+          "winnerTeamId": "united-states"
+        },
+        {
+          "matchId": "m82",
+          "winnerTeamId": "senegal"
+        },
+        {
+          "matchId": "m76",
+          "winnerTeamId": "brazil"
+        },
+        {
+          "matchId": "m78",
+          "winnerTeamId": "norway"
+        },
+        {
+          "matchId": "m79",
+          "winnerTeamId": "mexico"
+        },
+        {
+          "matchId": "m80",
+          "winnerTeamId": "england"
+        },
+        {
+          "matchId": "m86",
+          "winnerTeamId": "argentina"
+        },
+        {
+          "matchId": "m88",
+          "winnerTeamId": "egypt"
+        },
+        {
+          "matchId": "m85",
+          "winnerTeamId": "switzerland"
+        },
+        {
+          "matchId": "m87",
+          "winnerTeamId": "colombia"
+        },
+        {
+          "matchId": "m89",
+          "winnerTeamId": "france"
+        },
+        {
+          "matchId": "m90",
+          "winnerTeamId": "morocco"
+        },
+        {
+          "matchId": "m93",
+          "winnerTeamId": "spain"
+        },
+        {
+          "matchId": "m94",
+          "winnerTeamId": "senegal"
+        },
+        {
+          "matchId": "m91",
+          "winnerTeamId": "brazil"
+        },
+        {
+          "matchId": "m92",
+          "winnerTeamId": "england"
+        },
+        {
+          "matchId": "m95",
+          "winnerTeamId": "argentina"
+        },
+        {
+          "matchId": "m96",
+          "winnerTeamId": "switzerland"
+        },
+        {
+          "matchId": "m97",
+          "winnerTeamId": "france"
+        },
+        {
+          "matchId": "m98",
+          "winnerTeamId": "england"
+        },
+        {
+          "matchId": "m99",
+          "winnerTeamId": "spain"
+        },
+        {
+          "matchId": "m100",
+          "winnerTeamId": "argentina"
+        },
+        {
+          "matchId": "m101",
+          "winnerTeamId": "england"
+        },
+        {
+          "matchId": "m102",
+          "winnerTeamId": "argentina"
+        },
+        {
+          "matchId": "m104",
+          "winnerTeamId": "england"
+        }
+      ]
+    },
+    {
+      "id": "diana",
+      "name": "Diana",
+      "predictions": [
+        {
+          "matchId": "m74",
+          "winnerTeamId": "germany"
+        },
+        {
+          "matchId": "m77",
+          "winnerTeamId": "france"
+        },
+        {
+          "matchId": "m73",
+          "winnerTeamId": "south-africa"
+        },
+        {
+          "matchId": "m75",
+          "winnerTeamId": "netherlands"
+        },
+        {
+          "matchId": "m83",
+          "winnerTeamId": "portugal"
+        },
+        {
+          "matchId": "m84",
+          "winnerTeamId": "spain"
+        },
+        {
+          "matchId": "m81",
+          "winnerTeamId": "united-states"
+        },
+        {
+          "matchId": "m82",
+          "winnerTeamId": "belgium"
+        },
+        {
+          "matchId": "m76",
+          "winnerTeamId": "brazil"
+        },
+        {
+          "matchId": "m78",
+          "winnerTeamId": "norway"
+        },
+        {
+          "matchId": "m79",
+          "winnerTeamId": "mexico"
+        },
+        {
+          "matchId": "m80",
+          "winnerTeamId": "england"
+        },
+        {
+          "matchId": "m86",
+          "winnerTeamId": "argentina"
+        },
+        {
+          "matchId": "m88",
+          "winnerTeamId": "australia"
+        },
+        {
+          "matchId": "m85",
+          "winnerTeamId": "switzerland"
+        },
+        {
+          "matchId": "m87",
+          "winnerTeamId": "colombia"
+        },
+        {
+          "matchId": "m89",
+          "winnerTeamId": "france"
+        },
+        {
+          "matchId": "m90",
+          "winnerTeamId": "south-africa"
+        },
+        {
+          "matchId": "m93",
+          "winnerTeamId": "spain"
+        },
+        {
+          "matchId": "m94",
+          "winnerTeamId": "united-states"
+        },
+        {
+          "matchId": "m91",
+          "winnerTeamId": "brazil"
+        },
+        {
+          "matchId": "m92",
+          "winnerTeamId": "england"
+        },
+        {
+          "matchId": "m95",
+          "winnerTeamId": "australia"
+        },
+        {
+          "matchId": "m96",
+          "winnerTeamId": "argentina"
+        },
+        {
+          "matchId": "m97",
+          "winnerTeamId": "germany"
+        },
+        {
+          "matchId": "m98",
+          "winnerTeamId": "brazil"
+        },
+        {
+          "matchId": "m99",
+          "winnerTeamId": "portugal"
+        },
+        {
+          "matchId": "m100",
+          "winnerTeamId": "argentina"
+        },
+        {
+          "matchId": "m101",
+          "winnerTeamId": "germany"
+        },
+        {
+          "matchId": "m102",
+          "winnerTeamId": "argentina"
+        },
+        {
+          "matchId": "m104",
+          "winnerTeamId": "germany"
+        }
+      ]
+    },
+    {
+      "id": "manuel",
+      "name": "Manuel",
+      "predictions": [
+        {
+          "matchId": "m74",
+          "winnerTeamId": "germany"
+        },
+        {
+          "matchId": "m77",
+          "winnerTeamId": "france"
+        },
+        {
+          "matchId": "m73",
+          "winnerTeamId": "south-africa"
+        },
+        {
+          "matchId": "m75",
+          "winnerTeamId": "netherlands"
+        },
+        {
+          "matchId": "m83",
+          "winnerTeamId": "croatia"
+        },
+        {
+          "matchId": "m84",
+          "winnerTeamId": "spain"
+        },
+        {
+          "matchId": "m81",
+          "winnerTeamId": "united-states"
+        },
+        {
+          "matchId": "m82",
+          "winnerTeamId": "senegal"
+        },
+        {
+          "matchId": "m76",
+          "winnerTeamId": "brazil"
+        },
+        {
+          "matchId": "m78",
+          "winnerTeamId": "norway"
+        },
+        {
+          "matchId": "m79",
+          "winnerTeamId": "mexico"
+        },
+        {
+          "matchId": "m80",
+          "winnerTeamId": "england"
+        },
+        {
+          "matchId": "m86",
+          "winnerTeamId": "argentina"
+        },
+        {
+          "matchId": "m88",
+          "winnerTeamId": "egypt"
+        },
+        {
+          "matchId": "m85",
+          "winnerTeamId": "switzerland"
+        },
+        {
+          "matchId": "m87",
+          "winnerTeamId": "colombia"
+        },
+        {
+          "matchId": "m89",
+          "winnerTeamId": "france"
+        },
+        {
+          "matchId": "m90",
+          "winnerTeamId": "south-africa"
+        },
+        {
+          "matchId": "m93",
+          "winnerTeamId": "spain"
+        },
+        {
+          "matchId": "m94",
+          "winnerTeamId": "senegal"
+        },
+        {
+          "matchId": "m91",
+          "winnerTeamId": "brazil"
+        },
+        {
+          "matchId": "m92",
+          "winnerTeamId": "england"
+        },
+        {
+          "matchId": "m95",
+          "winnerTeamId": "argentina"
+        },
+        {
+          "matchId": "m96",
+          "winnerTeamId": "switzerland"
+        },
+        {
+          "matchId": "m97",
+          "winnerTeamId": "france"
+        },
+        {
+          "matchId": "m98",
+          "winnerTeamId": "brazil"
+        },
+        {
+          "matchId": "m99",
+          "winnerTeamId": "spain"
+        },
+        {
+          "matchId": "m100",
+          "winnerTeamId": "argentina"
+        },
+        {
+          "matchId": "m101",
+          "winnerTeamId": "france"
+        },
+        {
+          "matchId": "m102",
+          "winnerTeamId": "argentina"
+        },
+        {
+          "matchId": "m104",
+          "winnerTeamId": "france"
+        }
+      ]
+    },
+    {
+      "id": "cesar",
+      "name": "Cesar",
+      "predictions": [
+        {
+          "matchId": "m74",
+          "winnerTeamId": "germany"
+        },
+        {
+          "matchId": "m77",
+          "winnerTeamId": "france"
+        },
+        {
+          "matchId": "m73",
+          "winnerTeamId": "canada"
+        },
+        {
+          "matchId": "m75",
+          "winnerTeamId": "netherlands"
+        },
+        {
+          "matchId": "m83",
+          "winnerTeamId": "portugal"
+        },
+        {
+          "matchId": "m84",
+          "winnerTeamId": "spain"
+        },
+        {
+          "matchId": "m81",
+          "winnerTeamId": "united-states"
+        },
+        {
+          "matchId": "m82",
+          "winnerTeamId": "belgium"
+        },
+        {
+          "matchId": "m76",
+          "winnerTeamId": "brazil"
+        },
+        {
+          "matchId": "m78",
+          "winnerTeamId": "norway"
+        },
+        {
+          "matchId": "m79",
+          "winnerTeamId": "mexico"
+        },
+        {
+          "matchId": "m80",
+          "winnerTeamId": "england"
+        },
+        {
+          "matchId": "m86",
+          "winnerTeamId": "argentina"
+        },
+        {
+          "matchId": "m88",
+          "winnerTeamId": "egypt"
+        },
+        {
+          "matchId": "m85",
+          "winnerTeamId": "switzerland"
+        },
+        {
+          "matchId": "m87",
+          "winnerTeamId": "ghana"
+        },
+        {
+          "matchId": "m89",
+          "winnerTeamId": "france"
+        },
+        {
+          "matchId": "m90",
+          "winnerTeamId": "canada"
+        },
+        {
+          "matchId": "m93",
+          "winnerTeamId": "portugal"
+        },
+        {
+          "matchId": "m94",
+          "winnerTeamId": "belgium"
+        },
+        {
+          "matchId": "m91",
+          "winnerTeamId": "brazil"
+        },
+        {
+          "matchId": "m92",
+          "winnerTeamId": "mexico"
+        },
+        {
+          "matchId": "m95",
+          "winnerTeamId": "argentina"
+        },
+        {
+          "matchId": "m96",
+          "winnerTeamId": "switzerland"
+        },
+        {
+          "matchId": "m97",
+          "winnerTeamId": "france"
+        },
+        {
+          "matchId": "m98",
+          "winnerTeamId": "mexico"
+        },
+        {
+          "matchId": "m99",
+          "winnerTeamId": "portugal"
+        },
+        {
+          "matchId": "m100",
+          "winnerTeamId": "argentina"
+        },
+        {
+          "matchId": "m101",
+          "winnerTeamId": "portugal"
+        },
+        {
+          "matchId": "m102",
+          "winnerTeamId": "mexico"
+        },
+        {
+          "matchId": "m104",
+          "winnerTeamId": "mexico"
+        }
+      ]
+    },
+    {
+      "id": "sara",
+      "name": "Sara",
+      "predictions": [
+        {
+          "matchId": "m74",
+          "winnerTeamId": "germany"
+        },
+        {
+          "matchId": "m77",
+          "winnerTeamId": "france"
+        },
+        {
+          "matchId": "m73",
+          "winnerTeamId": "canada"
+        },
+        {
+          "matchId": "m75",
+          "winnerTeamId": "netherlands"
+        },
+        {
+          "matchId": "m83",
+          "winnerTeamId": "portugal"
+        },
+        {
+          "matchId": "m84",
+          "winnerTeamId": "spain"
+        },
+        {
+          "matchId": "m81",
+          "winnerTeamId": "united-states"
+        },
+        {
+          "matchId": "m82",
+          "winnerTeamId": "senegal"
+        },
+        {
+          "matchId": "m76",
+          "winnerTeamId": "brazil"
+        },
+        {
+          "matchId": "m78",
+          "winnerTeamId": "norway"
+        },
+        {
+          "matchId": "m79",
+          "winnerTeamId": "mexico"
+        },
+        {
+          "matchId": "m80",
+          "winnerTeamId": "england"
+        },
+        {
+          "matchId": "m86",
+          "winnerTeamId": "argentina"
+        },
+        {
+          "matchId": "m88",
+          "winnerTeamId": "egypt"
+        },
+        {
+          "matchId": "m85",
+          "winnerTeamId": "switzerland"
+        },
+        {
+          "matchId": "m87",
+          "winnerTeamId": "colombia"
+        },
+        {
+          "matchId": "m89",
+          "winnerTeamId": "france"
+        },
+        {
+          "matchId": "m90",
+          "winnerTeamId": "canada"
+        },
+        {
+          "matchId": "m93",
+          "winnerTeamId": "spain"
+        },
+        {
+          "matchId": "m94",
+          "winnerTeamId": "senegal"
+        },
+        {
+          "matchId": "m91",
+          "winnerTeamId": "brazil"
+        },
+        {
+          "matchId": "m92",
+          "winnerTeamId": "england"
+        },
+        {
+          "matchId": "m95",
+          "winnerTeamId": "egypt"
+        },
+        {
+          "matchId": "m96",
+          "winnerTeamId": "colombia"
+        },
+        {
+          "matchId": "m97",
+          "winnerTeamId": "netherlands"
+        },
+        {
+          "matchId": "m98",
+          "winnerTeamId": "brazil"
+        },
+        {
+          "matchId": "m99",
+          "winnerTeamId": "spain"
+        },
+        {
+          "matchId": "m100",
+          "winnerTeamId": "colombia"
+        },
+        {
+          "matchId": "m101",
+          "winnerTeamId": "netherlands"
+        },
+        {
+          "matchId": "m102",
+          "winnerTeamId": "brazil"
+        },
+        {
+          "matchId": "m104",
+          "winnerTeamId": "netherlands"
+        }
+      ]
+    }
+  ]
+}
