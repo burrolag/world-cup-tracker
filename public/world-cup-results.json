@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-02T16:31:39.664Z",
+  "lastUpdated": "2026-07-02T20:59:38.042Z",
   "source": "SerpApi Google Sports Results",
   "matches": [
     {
@@ -61,11 +61,11 @@
       "id": "m84",
       "homeTeamId": "spain",
       "awayTeamId": "austria",
-      "homeScore": null,
-      "awayScore": null,
-      "winnerTeamId": null,
+      "homeScore": 3,
+      "awayScore": 0,
+      "winnerTeamId": "spain",
       "date": "2026-07-02",
-      "status": "SCHEDULED",
+      "status": "Complete",
       "updatedAt": null
     },
     {
@@ -89,7 +89,7 @@
       "awayScore": 2,
       "winnerTeamId": "belgium",
       "date": "2026-07-01",
-      "status": "SCHEDULED",
+      "status": "Complete",
       "updatedAt": null
     },
     {
