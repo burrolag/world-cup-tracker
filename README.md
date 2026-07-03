@@ -53,6 +53,6 @@ If the score-update API route is hosted somewhere other than the same origin as 
 
 ## Data
 
-The app starts from editable seed data in `src/data/seed.ts` and keeps a browser cache for convenience.
+The app starts from the checked-in seed data in `src/data/seed.ts` and applies hosted results from `public/world-cup-results.json`.
 
 The default seed is the July 1, 2026 knockout bracket snapshot, including completed Round of 32 results available at that point. Later-round teams automatically fill in when you enter a winner for the prior match.

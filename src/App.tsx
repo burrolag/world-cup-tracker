@@ -1,34 +1,11 @@
-import { CheckCircle2, ChevronDown, Medal, Plus, RotateCcw, Trash2, Users } from "lucide-react";
+import { CheckCircle2, ChevronDown, Medal, RotateCcw, Users } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { roundLabels, roundPoints, seedState } from "./data/seed";
-import { advanceBracket } from "./lib/bracket";
 import { fetchOfficialResults, mergeOfficialResults } from "./lib/officialResults";
-import {
-  availablePredictionTeamIds,
-  isPredictionAllowed,
-  predictedMatchesForParticipant,
-  pruneAllInvalidPredictions,
-  pruneInvalidPredictions
-} from "./lib/predictionBracket";
-import { calculateScores, upsertPrediction, winnerFromScore } from "./lib/scoring";
-import type { Match, Participant, Round, TournamentState } from "./types";
+import { calculateScores } from "./lib/scoring";
+import type { Match, Round, TournamentState } from "./types";
 
-const storageKey = "world-cup-tracker-state-v3";
 const orderedRounds: Round[] = ["round32", "round16", "quarterfinal", "semifinal", "final"];
-
-function readInitialState(): TournamentState {
-  const saved = window.localStorage.getItem(storageKey);
-
-  if (!saved) {
-    return seedState;
-  }
-
-  try {
-    return JSON.parse(saved) as TournamentState;
-  } catch {
-    return seedState;
-  }
-}
 
 function teamName(state: TournamentState, teamId: string | null): string {
   if (!teamId) {
@@ -54,20 +31,9 @@ function matchOptions(state: TournamentState, match: Match) {
   ];
 }
 
-function slugify(value: string) {
-  return value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
-}
-
-function makeUniqueId(existingIds: string[], base: string) {
-  const fallback = base || "item";
-  return existingIds.includes(fallback) ? `${fallback}-${Date.now()}` : fallback;
-}
-
 export function App() {
-  const [state, setState] = useState<TournamentState>(readInitialState);
+  const [state, setState] = useState<TournamentState>(seedState);
   const [selectedRound, setSelectedRound] = useState<Round>("round32");
-  const [activeParticipantId, setActiveParticipantId] = useState(state.participants[0]?.id ?? "");
-  const [newParticipant, setNewParticipant] = useState("");
   const [isRefreshingScores, setIsRefreshingScores] = useState(false);
   const [officialResultsStatus, setOfficialResultsStatus] = useState("Official scores not loaded yet.");
   const [officialResultsError, setOfficialResultsError] = useState<string | null>(null);
@@ -82,7 +48,6 @@ export function App() {
 
   function applyOfficialResults(nextState: TournamentState) {
     setState(nextState);
-    window.localStorage.setItem(storageKey, JSON.stringify(nextState));
   }
 
   async function loadOfficialResults() {
@@ -123,91 +88,12 @@ export function App() {
     void loadOfficialResults();
   }, []);
 
-  function updateState(nextState: TournamentState) {
-    setState(nextState);
-    window.localStorage.setItem(storageKey, JSON.stringify(nextState));
-  }
-
-  function updateMatch(matchId: string, patch: Partial<Match>) {
-    const nextMatches = state.matches.map((match) => {
-      if (match.id !== matchId) {
-        return match;
-      }
-
-      const updated = { ...match, ...patch };
-      return { ...updated, winnerTeamId: patch.winnerTeamId ?? winnerFromScore(updated) };
-    });
-
-    const advancedMatches = advanceBracket(nextMatches, matchId);
-
-    updateState({
-      ...state,
-      matches: advancedMatches,
-      participants: pruneAllInvalidPredictions(advancedMatches, state.participants)
-    });
-  }
-
-  function updatePrediction(participant: Participant, matchId: string, winnerTeamId: string | null) {
-    const nextParticipant = pruneInvalidPredictions(
-      state.matches,
-      upsertPrediction(participant, matchId, winnerTeamId)
-    );
-
-    updateState({
-      ...state,
-      participants: state.participants.map((candidate) =>
-        candidate.id === participant.id ? nextParticipant : candidate
-      )
-    });
-  }
-
-  function participantPick(participant: Participant, matchId: string) {
+  function participantPick(participant: TournamentState["participants"][number], matchId: string) {
     return participant.predictions.find((prediction) => prediction.matchId === matchId)?.winnerTeamId ?? null;
   }
 
   function togglePredictionCard(matchId: string) {
     setExpandedPredictionCards((current) => ({ ...current, [matchId]: !current[matchId] }));
-  }
-
-  function addParticipant() {
-    const trimmed = newParticipant.trim();
-
-    if (!trimmed) {
-      return;
-    }
-
-    const uniqueId = makeUniqueId(
-      state.participants.map((participant) => participant.id),
-      slugify(trimmed)
-    );
-
-    const participant = {
-      id: uniqueId,
-      name: trimmed,
-      predictions: state.matches.map((match) => ({ matchId: match.id, winnerTeamId: null }))
-    };
-
-    updateState({ ...state, participants: [...state.participants, participant] });
-    setActiveParticipantId(uniqueId);
-    setNewParticipant("");
-  }
-
-  function updateParticipantName(participantId: string, name: string) {
-    updateState({
-      ...state,
-      participants: state.participants.map((participant) =>
-        participant.id === participantId ? { ...participant, name } : participant
-      )
-    });
-  }
-
-  function deleteParticipant(participantId: string) {
-    const nextParticipants = state.participants.filter((participant) => participant.id !== participantId);
-
-    updateState({ ...state, participants: nextParticipants });
-    if (activeParticipantId === participantId) {
-      setActiveParticipantId(nextParticipants[0]?.id ?? "");
-    }
   }
 
   function renderMatchCard(match: Match) {
@@ -217,18 +103,8 @@ export function App() {
           <span className={`status-pill ${match.winnerTeamId ? "complete" : ""}`}>
             {match.winnerTeamId ? "Full time" : "Scheduled"}
           </span>
-          <input
-            className="match-label-input"
-            aria-label={`${match.label} label`}
-            value={match.label}
-            onChange={(event) => updateMatch(match.id, { label: event.target.value })}
-          />
-          <input
-            className="match-date-input"
-            aria-label={`${match.label} date`}
-            value={match.date}
-            onChange={(event) => updateMatch(match.id, { date: event.target.value })}
-          />
+          <span className="match-label-text">{match.label}</span>
+          <span className="match-date-text">{match.date}</span>
         </div>
         <div className="score-entry">
           {matchOptions(state, match).map((option, index) => (
@@ -236,28 +112,13 @@ export function App() {
               className={`team-score ${match.winnerTeamId === option.id ? "winner" : ""}`}
               key={`${match.id}-${index}-${option.id}`}
             >
-              <button
-                className="team-pick"
-                type="button"
-                disabled={!option.id}
-                onClick={() => updateMatch(match.id, { winnerTeamId: option.id })}
-              >
+              <div className="team-pick read-only" aria-label={option.label}>
                 <span className="team-code">{option.code}</span>
                 <span className="team-name">{option.label}</span>
-              </button>
-              <input
-                className="score-input"
-                aria-label={`${option.label} score`}
-                min="0"
-                type="number"
-                value={(index === 0 ? match.homeScore : match.awayScore) ?? ""}
-                onChange={(event) =>
-                  updateMatch(match.id, {
-                    [index === 0 ? "homeScore" : "awayScore"]:
-                      event.target.value === "" ? null : Number(event.target.value)
-                  })
-                }
-              />
+              </div>
+              <span className="score-value" aria-label={`${option.label} score`}>
+                {(index === 0 ? match.homeScore : match.awayScore) ?? ""}
+              </span>
             </div>
           ))}
         </div>
@@ -323,48 +184,12 @@ export function App() {
           </div>
           <div className="leader-list">
             {scores.map((row, index) => (
-              <div
-                className={`leader-row ${row.participant.id === activeParticipantId ? "active" : ""} ${
-                  index < 3 ? "podium" : ""
-                }`}
-                key={row.participant.id}
-              >
-                <button className="rank" type="button" onClick={() => setActiveParticipantId(row.participant.id)}>
-                  {index + 1}
-                </button>
-                <input
-                  aria-label={`Rename ${row.participant.name}`}
-                  value={row.participant.name}
-                  onChange={(event) => updateParticipantName(row.participant.id, event.target.value)}
-                  onFocus={() => setActiveParticipantId(row.participant.id)}
-                />
+              <div className={`leader-row ${index < 3 ? "podium" : ""}`} key={row.participant.id}>
+                <span className="rank">{index + 1}</span>
+                <span className="leader-name">{row.participant.name}</span>
                 <strong className="score-pill">{row.score}</strong>
-                <button
-                  className="icon-button danger"
-                  type="button"
-                  aria-label={`Remove ${row.participant.name}`}
-                  onClick={() => deleteParticipant(row.participant.id)}
-                >
-                  <Trash2 size={16} aria-hidden="true" />
-                </button>
               </div>
             ))}
-          </div>
-          <div className="add-person">
-            <input
-              aria-label="New participant name"
-              placeholder="Add person"
-              value={newParticipant}
-              onChange={(event) => setNewParticipant(event.target.value)}
-              onKeyDown={(event) => {
-                if (event.key === "Enter") {
-                  addParticipant();
-                }
-              }}
-            />
-            <button type="button" aria-label="Add participant" onClick={addParticipant}>
-              <Plus size={18} aria-hidden="true" />
-            </button>
           </div>
         </aside>
 
@@ -394,7 +219,7 @@ export function App() {
         <section className="panel predictions">
           <div className="panel-heading">
             <h2>Predictions</h2>
-            <span className="muted">Assign picks for {roundLabels[selectedRound]}</span>
+            <span className="muted">Picks for {roundLabels[selectedRound]}</span>
           </div>
           {state.participants.length > 0 ? (
             <div className="prediction-list">
@@ -437,25 +262,6 @@ export function App() {
                           const selectedParticipants = state.participants.filter(
                             (participant) => participantPick(participant, match.id) === option.id
                           );
-                          const assignableParticipants = state.participants.filter(
-                            (participant) =>
-                              participantPick(participant, match.id) !== option.id &&
-                              isPredictionAllowed(state.matches, participant, match.id, option.id)
-                          );
-                          const unavailableCount = state.participants.filter((participant) => {
-                            const predictedMatch = predictedMatchesForParticipant(state.matches, participant).find(
-                              (candidate) => candidate.id === match.id
-                            );
-                            const availableTeams = availablePredictionTeamIds(state.matches, participant, match.id);
-
-                            return (
-                              participantPick(participant, match.id) !== option.id &&
-                              availableTeams.length > 0 &&
-                              Boolean(predictedMatch?.homeTeamId) &&
-                              !isPredictionAllowed(state.matches, participant, match.id, option.id)
-                            );
-                          }).length;
-
                           return (
                             <section className="pick-group" key={`${match.id}-${option.id}`}>
                               <div className="pick-group-heading">
@@ -465,49 +271,17 @@ export function App() {
                               <div className="pick-tabs" role="list" aria-label={`${option.label} picks`}>
                                 {selectedParticipants.length > 0 ? (
                                   selectedParticipants.map((participant) => (
-                                    <button
+                                    <span
                                       className="pick-tab selected"
                                       key={`${match.id}-${option.id}-${participant.id}`}
-                                      type="button"
-                                      aria-label={`Clear ${participant.name}'s ${option.label} pick`}
-                                      onClick={() => updatePrediction(participant, match.id, null)}
                                     >
                                       {participant.name}
-                                      <span aria-hidden="true">x</span>
-                                    </button>
+                                    </span>
                                   ))
                                 ) : (
                                   <span className="pick-empty">No picks yet</span>
                                 )}
                               </div>
-                              <select
-                                aria-label={`Assign ${option.label} pick for ${match.label}`}
-                                value=""
-                                disabled={assignableParticipants.length === 0}
-                                onChange={(event) => {
-                                  const participant = state.participants.find(
-                                    (candidate) => candidate.id === event.target.value
-                                  );
-
-                                  if (participant) {
-                                    updatePrediction(participant, match.id, option.id);
-                                  }
-                                }}
-                              >
-                                <option value="">
-                                  {assignableParticipants.length > 0 ? "Add player" : "No eligible players"}
-                                </option>
-                                {assignableParticipants.map((participant) => (
-                                  <option key={`${match.id}-${option.id}-${participant.id}`} value={participant.id}>
-                                    {participant.name}
-                                  </option>
-                                ))}
-                              </select>
-                              {unavailableCount > 0 ? (
-                                <small className="pick-note">
-                                  {unavailableCount} not in this bracket path
-                                </small>
-                              ) : null}
                             </section>
                           );
                         })}
@@ -520,7 +294,7 @@ export function App() {
               })}
             </div>
           ) : (
-            <p className="empty-state">Add a person to start tracking predictions.</p>
+            <p className="empty-state">No predictions are available.</p>
           )}
         </section>
       </section>

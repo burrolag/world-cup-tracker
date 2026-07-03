@@ -149,8 +149,7 @@ h2 {
   padding: 16px 0;
 }
 
-.toolbar button,
-.add-person button {
+.toolbar button {
   align-items: center;
   background: #ffffff;
   border: 1px solid #cfd8d1;
@@ -241,7 +240,7 @@ h2 {
   color: #17201d;
   display: grid;
   gap: 10px;
-  grid-template-columns: 34px minmax(0, 1fr) 48px 34px;
+  grid-template-columns: 34px minmax(0, 1fr) 48px;
   min-height: 54px;
   padding: 8px;
 }
@@ -251,15 +250,9 @@ h2 {
   border-color: #ead48a;
 }
 
-.leader-row.active {
-  border-color: #176b57;
-  box-shadow: inset 4px 0 0 #176b57;
-}
-
 .rank {
   align-items: center;
   background: #ecf2ee;
-  border: 0;
   border-radius: 8px;
   color: #17201d;
   display: inline-flex;
@@ -285,28 +278,11 @@ h2 {
   padding: 5px 8px;
 }
 
-.icon-button {
-  align-items: center;
-  background: #f5f7f5;
-  border: 1px solid #dde5df;
-  border-radius: 8px;
-  color: #17201d;
-  display: inline-flex;
-  height: 34px;
-  justify-content: center;
-  padding: 0;
-  width: 34px;
-}
-
-.icon-button.danger {
-  color: #9f2d3e;
-}
-
-.add-person {
-  display: grid;
-  gap: 8px;
-  grid-template-columns: minmax(0, 1fr) 44px;
-  margin-top: 12px;
+.leader-name {
+  font-weight: 750;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 input,
@@ -325,17 +301,6 @@ select:focus,
 button:focus-visible {
   outline: 3px solid rgba(23, 107, 87, 0.2);
   outline-offset: 2px;
-}
-
-.leader-row input {
-  background: transparent;
-  border-color: transparent;
-  font-weight: 750;
-}
-
-.leader-row input:focus {
-  background: #ffffff;
-  border-color: #b9c8bf;
 }
 
 .round-tabs {
@@ -394,24 +359,19 @@ button:focus-visible {
   margin-bottom: 7px;
 }
 
-.match-label-input,
-.match-date-input {
-  background: transparent;
-  border: 0;
-  border-radius: 0;
+.match-label-text,
+.match-date-text {
   color: #213756;
   font-size: 0.72rem;
-  min-height: 24px;
-  padding: 0;
 }
 
-.match-label-input {
+.match-label-text {
   font-weight: 850;
   text-decoration: underline;
   text-transform: uppercase;
 }
 
-.match-date-input {
+.match-date-text {
   text-align: right;
 }
 
@@ -474,13 +434,12 @@ button:focus-visible {
   text-align: left;
 }
 
-.team-score.winner .team-pick {
-  color: #081f3d;
+.team-score .team-pick.read-only {
+  cursor: default;
 }
 
-.team-score .team-pick:disabled {
-  color: #8d9992;
-  cursor: not-allowed;
+.team-score.winner .team-pick {
+  color: #081f3d;
 }
 
 .team-code {
@@ -501,13 +460,14 @@ button:focus-visible {
   white-space: nowrap;
 }
 
-.team-score input {
+.score-value {
+  align-items: center;
   background: #fbfcfe;
-  border: 0;
   border-left: 1px solid #d8e0e9;
-  border-radius: 0;
   color: #10243f;
+  display: inline-flex;
   font-weight: 850;
+  justify-content: center;
   min-height: 27px;
   padding: 0 4px;
   text-align: center;
@@ -631,28 +591,9 @@ button:focus-visible {
   padding: 3px 8px;
 }
 
-.pick-tab span {
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 999px;
-  display: inline-flex;
-  font-size: 0.68rem;
-  height: 15px;
-  justify-content: center;
-  line-height: 1;
-  padding-top: 1px;
-  width: 15px;
-}
-
-.pick-empty,
-.pick-note {
+.pick-empty {
   color: #8b9690;
   font-size: 0.72rem;
-}
-
-.pick-group select {
-  font-size: 0.78rem;
-  min-height: 32px;
-  padding: 0 8px;
 }
 
 .empty-state {
@@ -702,11 +643,11 @@ button:focus-visible {
     grid-template-columns: 1fr;
   }
 
-  .match-date-input {
+  .match-date-text {
     text-align: left;
   }
 
   .leader-row {
-    grid-template-columns: 34px minmax(0, 1fr) 44px 34px;
+    grid-template-columns: 34px minmax(0, 1fr) 44px;
   }
 }
