@@ -153,11 +153,11 @@
       "id": "m88",
       "homeTeamId": "australia",
       "awayTeamId": "egypt",
-      "homeScore": null,
-      "awayScore": null,
-      "winnerTeamId": null,
+      "homeScore": 1,
+      "awayScore": 1,
+      "winnerTeamId": "egypt",
       "date": "2026-07-03",
-      "status": "SCHEDULED",
+      "status": "Complete",
       "updatedAt": null
     },
     {
