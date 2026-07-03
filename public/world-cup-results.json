@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-03T03:56:31.639Z",
+  "lastUpdated": "2026-07-03T05:00:24.943Z",
   "source": "SerpApi Google Sports Results",
   "matches": [
     {
@@ -164,12 +164,14 @@
       "id": "m85",
       "homeTeamId": "switzerland",
       "awayTeamId": "algeria",
-      "homeScore": null,
-      "awayScore": null,
-      "winnerTeamId": null,
+      "homeScore": 2,
+      "awayScore": 0,
+      "winnerTeamId": "switzerland",
       "date": "2026-07-02",
-      "status": "SCHEDULED",
-      "updatedAt": null
+      "status": "Complete",
+      "updatedAt": "2026-07-03T05:00:24.942Z",
+      "homePenaltyScore": null,
+      "awayPenaltyScore": null
     },
     {
       "id": "m87",
