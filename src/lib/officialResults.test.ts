@@ -1,6 +1,6 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import type { TournamentState } from "../types";
-import { mergeOfficialResults } from "./officialResults";
+import { mergeOfficialResults, updateHostedFinalScores } from "./officialResults";
 
 const state: TournamentState = {
   teams: [],
@@ -60,5 +60,49 @@ describe("mergeOfficialResults", () => {
       winnerTeamId: "canada"
     });
     expect(nextState.matches.find((match) => match.id === "m90")?.homeTeamId).toBe("canada");
+  });
+});
+
+describe("updateHostedFinalScores", () => {
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
+  it("calls the backend score update endpoint and returns the updated results file", async () => {
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        ok: true,
+        summary: { checked: 2, updated: 1, skipped: 1, issues: [] },
+        resultsFile: {
+          lastUpdated: "2026-07-02T00:00:00.000Z",
+          source: "SerpApi Google Sports Results",
+          matches: []
+        }
+      })
+    });
+
+    vi.stubGlobal("fetch", fetchMock);
+
+    const result = await updateHostedFinalScores("/api/world-cup/update-final-scores");
+
+    expect(fetchMock).toHaveBeenCalledWith("/api/world-cup/update-final-scores", { cache: "no-store" });
+    expect(result.summary).toMatchObject({ checked: 2, updated: 1 });
+    expect(result.resultsFile?.source).toBe("SerpApi Google Sports Results");
+  });
+
+  it("reports backend score update failures", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue({
+        ok: false,
+        status: 500,
+        json: async () => ({ ok: false, error: "SERPAPI_KEY is required." })
+      })
+    );
+
+    await expect(updateHostedFinalScores("/api/world-cup/update-final-scores")).rejects.toThrow(
+      "SERPAPI_KEY is required."
+    );
   });
 });

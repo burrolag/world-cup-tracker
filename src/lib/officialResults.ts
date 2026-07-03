@@ -18,6 +18,18 @@ export type OfficialResultsFile = {
   matches: OfficialMatchResult[];
 };
 
+export type OfficialScoreUpdateSummary = {
+  checked: number;
+  updated: number;
+  skipped: number;
+  issues: string[];
+};
+
+export type OfficialScoreUpdateResponse = {
+  summary: OfficialScoreUpdateSummary;
+  resultsFile: OfficialResultsFile | null;
+};
+
 function applyOfficialResult(match: Match, result: OfficialMatchResult): Match {
   return {
     ...match,
@@ -56,4 +68,24 @@ export async function fetchOfficialResults(): Promise<OfficialResultsFile> {
   }
 
   return (await response.json()) as OfficialResultsFile;
+}
+
+export async function updateHostedFinalScores(
+  endpoint = import.meta.env.VITE_SCORE_UPDATE_ENDPOINT ?? "/api/world-cup/update-final-scores"
+): Promise<OfficialScoreUpdateResponse> {
+  const response = await fetch(endpoint, {
+    cache: "no-store"
+  });
+  const result = (await response.json().catch(() => null)) as
+    | { ok?: boolean; summary?: OfficialScoreUpdateSummary; resultsFile?: OfficialResultsFile; error?: string }
+    | null;
+
+  if (!response.ok || result?.ok === false) {
+    throw new Error(result?.error ?? `Score update failed with ${response.status}.`);
+  }
+
+  return {
+    summary: result?.summary ?? { checked: 0, updated: 0, skipped: 0, issues: [] },
+    resultsFile: result?.resultsFile ?? null
+  };
 }

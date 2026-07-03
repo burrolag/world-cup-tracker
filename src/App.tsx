@@ -2,7 +2,7 @@ import { CheckCircle2, ChevronDown, Medal, Plus, RotateCcw, Save, Trash2, Users 
 import { useEffect, useMemo, useState } from "react";
 import { roundLabels, roundPoints, seedState } from "./data/seed";
 import { advanceBracket } from "./lib/bracket";
-import { fetchOfficialResults, mergeOfficialResults } from "./lib/officialResults";
+import { fetchOfficialResults, mergeOfficialResults, updateHostedFinalScores } from "./lib/officialResults";
 import {
   availablePredictionTeamIds,
   isPredictionAllowed,
@@ -70,6 +70,7 @@ export function App() {
   const [newParticipant, setNewParticipant] = useState("");
   const [saveError, setSaveError] = useState<string | null>(null);
   const [isSavingToGitHub, setIsSavingToGitHub] = useState(false);
+  const [isRefreshingScores, setIsRefreshingScores] = useState(false);
   const [officialResultsStatus, setOfficialResultsStatus] = useState("Official scores not loaded yet.");
   const [officialResultsError, setOfficialResultsError] = useState<string | null>(null);
   const [expandedPredictionCards, setExpandedPredictionCards] = useState<Record<string, boolean>>({});
@@ -86,7 +87,7 @@ export function App() {
     window.localStorage.setItem(storageKey, JSON.stringify(nextState));
   }
 
-  async function refreshOfficialResults() {
+  async function loadOfficialResults() {
     try {
       setOfficialResultsStatus("Loading official scores...");
       const resultsFile = await fetchOfficialResults();
@@ -101,8 +102,30 @@ export function App() {
     }
   }
 
+  async function refreshOfficialResults() {
+    try {
+      setIsRefreshingScores(true);
+      setOfficialResultsStatus("Checking for final scores...");
+      setOfficialResultsError(null);
+
+      const updateResult = await updateHostedFinalScores();
+      const resultsFile = updateResult.resultsFile ?? (await fetchOfficialResults());
+      const nextState = mergeOfficialResults(state, resultsFile);
+
+      applyOfficialResults(nextState);
+      setOfficialResultsStatus(
+        `Official scores updated ${new Date(resultsFile.lastUpdated).toLocaleString()}. Checked ${updateResult.summary.checked}, updated ${updateResult.summary.updated}.`
+      );
+    } catch (error) {
+      setOfficialResultsStatus("Official scores could not be refreshed.");
+      setOfficialResultsError(error instanceof Error ? error.message : "Unknown official results error.");
+    } finally {
+      setIsRefreshingScores(false);
+    }
+  }
+
   useEffect(() => {
-    void refreshOfficialResults();
+    void loadOfficialResults();
   }, []);
 
   function updateState(nextState: TournamentState) {
@@ -321,9 +344,9 @@ export function App() {
           <Save size={18} aria-hidden="true" />
           {isSavingToGitHub ? "Saving..." : "Save"}
         </button>
-        <button type="button" onClick={() => void refreshOfficialResults()}>
+        <button type="button" onClick={() => void refreshOfficialResults()} disabled={isRefreshingScores}>
           <RotateCcw size={18} aria-hidden="true" />
-          Refresh Scores
+          {isRefreshingScores ? "Refreshing..." : "Refresh Scores"}
         </button>
       </section>
 

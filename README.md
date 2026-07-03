@@ -26,7 +26,7 @@ npm.cmd run build
 
 ## Automatic scores
 
-The published app loads official scores from `public/world-cup-results.json` on startup and when **Refresh Scores** is clicked. A scheduled GitHub Action can refresh that file from SerpApi Google Sports Results.
+The published app loads official scores from `public/world-cup-results.json` on startup. When **Refresh Scores** is clicked, the app first calls the backend endpoint `GET /api/world-cup/update-final-scores`, then applies the updated results returned by that endpoint. A scheduled GitHub Action can also refresh the JSON file from SerpApi Google Sports Results.
 
 To enable automatic updates in GitHub:
 
@@ -63,6 +63,8 @@ The API route must run on a backend/serverless host because the GitHub token mus
 - `GITHUB_BRANCH`: branch to update, defaults to `main`
 
 If the API route is hosted somewhere other than the same origin as the app, set the frontend env var `VITE_BOARD_SAVE_ENDPOINT` to that full endpoint URL before building.
+
+If the score-update API route is hosted somewhere other than the same origin as the app, set `VITE_SCORE_UPDATE_ENDPOINT` to the full `GET /api/world-cup/update-final-scores` URL before building. A static GitHub Pages site cannot run this API route by itself; it needs a separate backend/serverless host for SerpApi calls because `SERPAPI_KEY` must stay server-side.
 
 ## Data
 
