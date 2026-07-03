@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-02T20:59:38.042Z",
+  "lastUpdated": "2026-07-03T03:56:31.639Z",
   "source": "SerpApi Google Sports Results",
   "matches": [
     {
@@ -50,12 +50,14 @@
       "id": "m83",
       "homeTeamId": "portugal",
       "awayTeamId": "croatia",
-      "homeScore": null,
-      "awayScore": null,
-      "winnerTeamId": null,
+      "homeScore": 2,
+      "awayScore": 1,
+      "winnerTeamId": "portugal",
       "date": "2026-07-02",
-      "status": "SCHEDULED",
-      "updatedAt": null
+      "status": "Complete",
+      "updatedAt": "2026-07-03T03:56:04.181Z",
+      "homePenaltyScore": null,
+      "awayPenaltyScore": null
     },
     {
       "id": "m84",
