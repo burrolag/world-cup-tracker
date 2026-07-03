@@ -158,7 +158,9 @@
       "winnerTeamId": "egypt",
       "date": "2026-07-03",
       "status": "Complete",
-      "updatedAt": null
+      "updatedAt": "2026-07-03T14:00:24.942Z",
+      "homePenaltyScore": 3,
+      "awayPenaltyScore": 5
     },
     {
       "id": "m85",
