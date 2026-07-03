@@ -26,7 +26,7 @@ npm.cmd run build
 
 ## Automatic scores
 
-The published app loads official scores from `public/world-cup-results.json` on startup. When **Refresh Scores** is clicked, the app first calls the backend endpoint `GET /api/world-cup/update-final-scores`, then applies the updated results returned by that endpoint. A scheduled GitHub Action can also refresh the JSON file from SerpApi Google Sports Results.
+The published GitHub Pages app loads official scores from `public/world-cup-results.json` on startup and when **Refresh Scores** is clicked. A scheduled GitHub Action refreshes that JSON file from SerpApi Google Sports Results.
 
 To enable automatic updates in GitHub:
 
@@ -48,21 +48,6 @@ https://serpapi.com/search.json?engine=google&q=<QUERY>&api_key=<SERPAPI_KEY>
 ```
 
 Only matches that started more than two hours ago and are not complete are checked. Scores are saved only when SerpApi returns a clear final status such as `Final`, `FT`, `Full-time`, `Complete`, or `Finished`. If a match has only a date and no `kickoffUtc`, the updater waits until the end of that UTC date before checking to avoid early polling.
-
-## Saving manual board edits
-
-The app has a **Save to GitHub** button for manual score and prediction changes. That button calls `POST /api/world-cup/save-board`, which creates one GitHub commit updating:
-
-- `src/data/defaultBoard.json`
-- `public/world-cup-results.json`
-
-The API route must run on a backend/serverless host because the GitHub token must not be exposed in the Vite frontend. Configure these backend environment variables:
-
-- `GITHUB_TOKEN` or `GH_TOKEN`: token with repository contents write access
-- `GITHUB_REPOSITORY` or `GH_REPOSITORY`: owner/repo, for example `your-name/world-cup-tracker`
-- `GITHUB_BRANCH`: branch to update, defaults to `main`
-
-If the API route is hosted somewhere other than the same origin as the app, set the frontend env var `VITE_BOARD_SAVE_ENDPOINT` to that full endpoint URL before building.
 
 If the score-update API route is hosted somewhere other than the same origin as the app, set `VITE_SCORE_UPDATE_ENDPOINT` to the full `GET /api/world-cup/update-final-scores` URL before building. A static GitHub Pages site cannot run this API route by itself; it needs a separate backend/serverless host for SerpApi calls because `SERPAPI_KEY` must stay server-side.
 

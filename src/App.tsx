@@ -1,8 +1,8 @@
-import { CheckCircle2, ChevronDown, Medal, Plus, RotateCcw, Save, Trash2, Users } from "lucide-react";
+import { CheckCircle2, ChevronDown, Medal, Plus, RotateCcw, Trash2, Users } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { roundLabels, roundPoints, seedState } from "./data/seed";
 import { advanceBracket } from "./lib/bracket";
-import { fetchOfficialResults, mergeOfficialResults, updateHostedFinalScores } from "./lib/officialResults";
+import { fetchOfficialResults, mergeOfficialResults } from "./lib/officialResults";
 import {
   availablePredictionTeamIds,
   isPredictionAllowed,
@@ -68,8 +68,6 @@ export function App() {
   const [selectedRound, setSelectedRound] = useState<Round>("round32");
   const [activeParticipantId, setActiveParticipantId] = useState(state.participants[0]?.id ?? "");
   const [newParticipant, setNewParticipant] = useState("");
-  const [saveError, setSaveError] = useState<string | null>(null);
-  const [isSavingToGitHub, setIsSavingToGitHub] = useState(false);
   const [isRefreshingScores, setIsRefreshingScores] = useState(false);
   const [officialResultsStatus, setOfficialResultsStatus] = useState("Official scores not loaded yet.");
   const [officialResultsError, setOfficialResultsError] = useState<string | null>(null);
@@ -105,17 +103,14 @@ export function App() {
   async function refreshOfficialResults() {
     try {
       setIsRefreshingScores(true);
-      setOfficialResultsStatus("Checking for final scores...");
+      setOfficialResultsStatus("Loading official scores...");
       setOfficialResultsError(null);
 
-      const updateResult = await updateHostedFinalScores();
-      const resultsFile = updateResult.resultsFile ?? (await fetchOfficialResults());
+      const resultsFile = await fetchOfficialResults();
       const nextState = mergeOfficialResults(state, resultsFile);
 
       applyOfficialResults(nextState);
-      setOfficialResultsStatus(
-        `Official scores updated ${new Date(resultsFile.lastUpdated).toLocaleString()}. Checked ${updateResult.summary.checked}, updated ${updateResult.summary.updated}.`
-      );
+      setOfficialResultsStatus(`Official scores updated ${new Date(resultsFile.lastUpdated).toLocaleString()}.`);
     } catch (error) {
       setOfficialResultsStatus("Official scores could not be refreshed.");
       setOfficialResultsError(error instanceof Error ? error.message : "Unknown official results error.");
@@ -131,32 +126,6 @@ export function App() {
   function updateState(nextState: TournamentState) {
     setState(nextState);
     window.localStorage.setItem(storageKey, JSON.stringify(nextState));
-    setSaveError(null);
-  }
-
-  async function saveBoardToGitHub() {
-    try {
-      setIsSavingToGitHub(true);
-      setSaveError(null);
-
-      const response = await fetch(
-        import.meta.env.VITE_BOARD_SAVE_ENDPOINT ?? "/api/world-cup/save-board",
-        {
-          method: "POST",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify({ state })
-        }
-      );
-      const result = (await response.json().catch(() => null)) as { error?: string; commitUrl?: string } | null;
-
-      if (!response.ok) {
-        throw new Error(result?.error ? result.error.replace(/github/gi, "save") : `Save failed with ${response.status}.`);
-      }
-    } catch (error) {
-      setSaveError(error instanceof Error ? error.message : "Unknown save error.");
-    } finally {
-      setIsSavingToGitHub(false);
-    }
   }
 
   function updateMatch(matchId: string, patch: Partial<Match>) {
@@ -335,22 +304,12 @@ export function App() {
       </section>
 
       <section className="toolbar" aria-label="Tracker actions">
-        <button
-          className="primary-action"
-          type="button"
-          onClick={() => void saveBoardToGitHub()}
-          disabled={isSavingToGitHub}
-        >
-          <Save size={18} aria-hidden="true" />
-          {isSavingToGitHub ? "Saving..." : "Save"}
-        </button>
         <button type="button" onClick={() => void refreshOfficialResults()} disabled={isRefreshingScores}>
           <RotateCcw size={18} aria-hidden="true" />
           {isRefreshingScores ? "Refreshing..." : "Refresh Scores"}
         </button>
       </section>
 
-      {saveError ? <p className="sync-error">Save issue: {saveError}</p> : null}
       <p className={`results-status ${officialResultsError ? "error" : ""}`}>
         {officialResultsStatus}
         {officialResultsError ? ` ${officialResultsError}` : ""}

@@ -176,20 +176,6 @@ h2 {
   cursor: wait;
 }
 
-.sync-error,
-.loading-state {
-  background: #fff7df;
-  border: 1px solid #e1c46b;
-  border-radius: 8px;
-  margin: 0 0 14px;
-  padding: 10px 12px;
-}
-
-.sync-error {
-  background: #fff0f1;
-  border-color: #c98289;
-}
-
 .results-status {
   background: #f8f2dc;
   border: 1px solid #e4d290;
