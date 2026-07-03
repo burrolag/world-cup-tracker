@@ -59,7 +59,7 @@ export function mergeOfficialResults(state: TournamentState, resultsFile: Offici
 }
 
 export async function fetchOfficialResults(): Promise<OfficialResultsFile> {
-  const response = await fetch(`${import.meta.env.BASE_URL}world-cup-results.json`, {
+  const response = await fetch(`${import.meta.env.BASE_URL}world-cup-results.json?t=${Date.now()}`, {
     cache: "no-store"
   });
 
