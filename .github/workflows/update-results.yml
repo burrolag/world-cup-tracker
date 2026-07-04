@@ -7,9 +7,18 @@ on:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
 
 jobs:
   update-final-scores:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -30,7 +39,23 @@ jobs:
           SERPAPI_KEY: ${{ secrets.SERPAPI_KEY }}
 
       - name: Commit updated results
+        id: commit-results
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Update World Cup final scores"
           file_pattern: public/world-cup-results.json
+
+      - name: Build updated site
+        if: steps.commit-results.outputs.changes_detected == 'true'
+        run: npm run build
+
+      - name: Upload Pages artifact
+        if: steps.commit-results.outputs.changes_detected == 'true'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+      - name: Deploy updated site to GitHub Pages
+        if: steps.commit-results.outputs.changes_detected == 'true'
+        id: deployment
+        uses: actions/deploy-pages@v4
