@@ -142,11 +142,11 @@
       "id": "m86",
       "homeTeamId": "argentina",
       "awayTeamId": "cabo-verde",
-      "homeScore": null,
-      "awayScore": null,
-      "winnerTeamId": null,
+      "homeScore": 3,
+      "awayScore": 2,
+      "winnerTeamId": "argentina",
       "date": "2026-07-03",
-      "status": "SCHEDULED",
+      "status": "Complete",
       "updatedAt": null
     },
     {
@@ -179,11 +179,11 @@
       "id": "m87",
       "homeTeamId": "colombia",
       "awayTeamId": "ghana",
-      "homeScore": null,
-      "awayScore": null,
-      "winnerTeamId": null,
+      "homeScore": 1,
+      "awayScore": 0,
+      "winnerTeamId": "colombia",
       "date": "2026-07-03",
-      "status": "SCHEDULED",
+      "status": "Complete",
       "updatedAt": null
     },
     {
