@@ -22,6 +22,15 @@ const teamAliases = {
   "south africa": "south-africa"
 };
 
+const teamDisplayNames = {
+  "bosnia-herzegovina": "Bosnia and Herzegovina",
+  "cabo-verde": "Cabo Verde",
+  "dr-congo": "DR Congo",
+  "ivory-coast": "Ivory Coast",
+  "south-africa": "South Africa",
+  "united-states": "United States"
+};
+
 export function normalizeTeamName(value) {
   const normalized = String(value ?? "")
     .toLowerCase()
@@ -32,6 +41,11 @@ export function normalizeTeamName(value) {
     .trim();
 
   return teamAliases[normalized] ?? normalized.replace(/'/g, "").replace(/\s+/g, "-");
+}
+
+export function displayTeamName(value) {
+  const normalized = normalizeTeamName(value);
+  return teamDisplayNames[normalized] ?? normalized.replace(/-/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
 }
 
 export function parseJsonContent(content) {
@@ -53,14 +67,14 @@ function isFinalStatus(value) {
 function kickoffDate(match) {
   const value = match.kickoffUtc ?? match.date;
   if (/^\d{4}-\d{2}-\d{2}$/.test(value ?? "")) {
-    return new Date(`${value}T23:59:59Z`);
+    return new Date(`${value}T00:00:00Z`);
   }
 
   const date = new Date(value);
   return Number.isNaN(date.getTime()) ? null : date;
 }
 
-function shouldCheckMatch(match, now = new Date()) {
+export function shouldCheckMatch(match, now = new Date()) {
   if (isFinalStatus(match.status) || match.status === "Complete") {
     return false;
   }
@@ -230,7 +244,9 @@ export function parseSerpApiFinalScore(payload, match) {
 }
 
 async function fetchSerpApiResult(match, apiKey) {
-  const query = `2026 FIFA World Cup ${match.homeTeamId} vs ${match.awayTeamId} final score`;
+  const query = `2026 FIFA World Cup ${displayTeamName(match.homeTeamId)} vs ${displayTeamName(
+    match.awayTeamId
+  )} final score`;
   const url = new URL("https://serpapi.com/search.json");
   url.searchParams.set("engine", "google");
   url.searchParams.set("q", query);
@@ -304,14 +320,17 @@ export async function updateFinalScores({ resultsPath = defaultResultsPath, apiK
     }
   }
 
-  const next = {
-    ...current,
-    lastUpdated: new Date().toISOString(),
-    source: "SerpApi Google Sports Results",
-    matches: updatedMatches
-  };
+  if (summary.updated > 0) {
+    const next = {
+      ...current,
+      lastUpdated: new Date().toISOString(),
+      source: "SerpApi Google Sports Results",
+      matches: updatedMatches
+    };
 
-  await writeFile(resultsPath, `${JSON.stringify(next, null, 2)}\n`);
+    await writeFile(resultsPath, `${JSON.stringify(next, null, 2)}\n`);
+  }
+
   console.log(`[done] checked=${summary.checked} updated=${summary.updated} skipped=${summary.skipped}`);
   return summary;
 }
