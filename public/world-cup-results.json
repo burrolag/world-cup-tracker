@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-05T00:12:41.817Z",
+  "lastUpdated": "2026-07-05T22:39:36.995Z",
   "source": "SerpApi Google Sports Results",
   "matches": [
     {
@@ -234,12 +234,14 @@
       "id": "m91",
       "homeTeamId": "brazil",
       "awayTeamId": "norway",
-      "homeScore": null,
-      "awayScore": null,
-      "winnerTeamId": null,
+      "homeScore": 1,
+      "awayScore": 2,
+      "winnerTeamId": "norway",
       "date": "2026-07-05",
-      "status": "SCHEDULED",
-      "updatedAt": null
+      "status": "Complete",
+      "updatedAt": "2026-07-05T22:39:36.949Z",
+      "homePenaltyScore": null,
+      "awayPenaltyScore": null
     },
     {
       "id": "m92",
