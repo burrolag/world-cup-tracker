@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-05T22:39:36.995Z",
+  "lastUpdated": "2026-07-06T06:10:17.029Z",
   "source": "SerpApi Google Sports Results",
   "matches": [
     {
@@ -247,12 +247,14 @@
       "id": "m92",
       "homeTeamId": "mexico",
       "awayTeamId": "england",
-      "homeScore": null,
-      "awayScore": null,
-      "winnerTeamId": null,
+      "homeScore": 2,
+      "awayScore": 3,
+      "winnerTeamId": "england",
       "date": "2026-07-05",
-      "status": "SCHEDULED",
-      "updatedAt": null
+      "status": "Complete",
+      "updatedAt": "2026-07-06T06:10:17.028Z",
+      "homePenaltyScore": null,
+      "awayPenaltyScore": null
     },
     {
       "id": "m95",
