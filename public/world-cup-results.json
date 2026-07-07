@@ -1,6 +1,6 @@
 {
-  "lastUpdated": "2026-07-07T02:31:27.515Z",
-  "source": "Manual update from published match reports",
+  "lastUpdated": "2026-07-07T19:14:18.509Z",
+  "source": "SerpApi Google Sports Results",
   "matches": [
     {
       "id": "m74",
@@ -373,14 +373,16 @@
       "slot": 7,
       "homeTeamId": "argentina",
       "awayTeamId": "egypt",
-      "homeScore": null,
-      "awayScore": null,
-      "winnerTeamId": null,
+      "homeScore": 3,
+      "awayScore": 2,
+      "winnerTeamId": "argentina",
       "date": "2026-07-07",
       "nextMatchId": "m100",
       "nextMatchSide": "home",
-      "status": "SCHEDULED",
-      "updatedAt": null
+      "status": "Complete",
+      "updatedAt": "2026-07-07T19:13:56.634Z",
+      "homePenaltyScore": null,
+      "awayPenaltyScore": null
     },
     {
       "id": "m96",
