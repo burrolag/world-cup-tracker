@@ -1,11 +1,10 @@
 import { CheckCircle2, ChevronDown, Medal, RotateCcw, Users } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { roundLabels, roundPoints, seedState } from "./data/seed";
+import { currentRoundForDate, orderedRounds } from "./lib/currentRound";
 import { fetchOfficialResults, mergeOfficialResults } from "./lib/officialResults";
 import { calculateScores } from "./lib/scoring";
 import type { Match, Round, TournamentState } from "./types";
-
-const orderedRounds: Round[] = ["round32", "round16", "quarterfinal", "semifinal", "final"];
 
 function teamName(state: TournamentState, teamId: string | null): string {
   if (!teamId) {
@@ -33,11 +32,12 @@ function matchOptions(state: TournamentState, match: Match) {
 
 export function App() {
   const [state, setState] = useState<TournamentState>(seedState);
-  const [selectedRound, setSelectedRound] = useState<Round>("round32");
+  const [selectedRound, setSelectedRound] = useState<Round>(() => currentRoundForDate(seedState.matches));
   const [isRefreshingScores, setIsRefreshingScores] = useState(false);
   const [officialResultsStatus, setOfficialResultsStatus] = useState("Official scores not loaded yet.");
   const [officialResultsError, setOfficialResultsError] = useState<string | null>(null);
   const [expandedPredictionCards, setExpandedPredictionCards] = useState<Record<string, boolean>>({});
+  const userSelectedRound = useRef(false);
 
   const scores = useMemo(() => calculateScores(state.matches, state.participants), [state]);
   const selectedMatches = state.matches.filter((match) => match.round === selectedRound);
@@ -48,6 +48,9 @@ export function App() {
 
   function applyOfficialResults(nextState: TournamentState) {
     setState(nextState);
+    if (!userSelectedRound.current) {
+      setSelectedRound(currentRoundForDate(nextState.matches));
+    }
   }
 
   async function loadOfficialResults() {
@@ -94,6 +97,11 @@ export function App() {
 
   function togglePredictionCard(matchId: string) {
     setExpandedPredictionCards((current) => ({ ...current, [matchId]: !current[matchId] }));
+  }
+
+  function selectRound(round: Round) {
+    userSelectedRound.current = true;
+    setSelectedRound(round);
   }
 
   function renderMatchCard(match: Match) {
@@ -206,7 +214,7 @@ export function App() {
                 className={selectedRound === round ? "selected" : ""}
                 key={round}
                 type="button"
-                onClick={() => setSelectedRound(round)}
+                onClick={() => selectRound(round)}
               >
                 {roundLabels[round]}
                 <span>{roundPoints[round]} pt{roundPoints[round] === 1 ? "" : "s"}</span>
