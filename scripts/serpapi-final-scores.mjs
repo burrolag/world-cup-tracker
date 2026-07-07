@@ -2,6 +2,7 @@ import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 export const defaultResultsPath = path.resolve("public", "world-cup-results.json");
+export const defaultBoardPath = path.resolve("src", "data", "defaultBoard.json");
 
 const finalStatuses = new Set(["final", "full-time", "full time", "ft", "complete", "completed", "finished"]);
 
@@ -64,6 +65,74 @@ function isFinalStatus(value) {
   return finalStatuses.has(normalized) || /\b(final|finished|complete|completed|full time|ft)\b/i.test(value ?? "");
 }
 
+function destinationField(side) {
+  return side === "home" ? "homeTeamId" : "awayTeamId";
+}
+
+function winnerFromScore(match) {
+  if (match.homeScore === null || match.awayScore === null || match.homeScore === match.awayScore) {
+    return match.winnerTeamId;
+  }
+
+  return match.homeScore > match.awayScore ? match.homeTeamId : match.awayTeamId;
+}
+
+export function advanceBracket(matches, changedMatchId) {
+  const source = matches.find((match) => match.id === changedMatchId);
+  if (!source?.nextMatchId || !source.nextMatchSide) {
+    return matches;
+  }
+
+  return matches.map((match) => {
+    if (match.id !== source.nextMatchId) {
+      return match;
+    }
+
+    const nextTeamId = winnerFromScore(source) ?? "";
+    const next = {
+      ...match,
+      [destinationField(source.nextMatchSide)]: nextTeamId
+    };
+
+    if (next.winnerTeamId && ![next.homeTeamId, next.awayTeamId].includes(next.winnerTeamId)) {
+      return {
+        ...next,
+        homeScore: null,
+        awayScore: null,
+        winnerTeamId: null,
+        status: "SCHEDULED"
+      };
+    }
+
+    return next;
+  });
+}
+
+export function hydrateBracketResults(resultsFile, seedBoard) {
+  const seedById = new Map(seedBoard.matches.map((match) => [match.id, match]));
+  const matchesWithLinks = resultsFile.matches.map((match) => {
+    const seedMatch = seedById.get(match.id);
+    if (!seedMatch) {
+      return match;
+    }
+
+    return {
+      ...seedMatch,
+      ...match,
+      nextMatchId: seedMatch.nextMatchId,
+      nextMatchSide: seedMatch.nextMatchSide,
+      round: seedMatch.round,
+      slot: seedMatch.slot,
+      label: seedMatch.label
+    };
+  });
+
+  return {
+    ...resultsFile,
+    matches: matchesWithLinks.reduce((currentMatches, match) => advanceBracket(currentMatches, match.id), matchesWithLinks)
+  };
+}
+
 function kickoffDate(match) {
   const value = match.kickoffUtc ?? match.date;
   if (/^\d{4}-\d{2}-\d{2}$/.test(value ?? "")) {
@@ -80,6 +149,10 @@ export function shouldCheckMatch(match, now = new Date()) {
   }
 
   if (match.homeScore !== null || match.awayScore !== null || match.winnerTeamId) {
+    return false;
+  }
+
+  if (!match.homeTeamId || !match.awayTeamId) {
     return false;
   }
 
@@ -275,16 +348,23 @@ function validCompletedOverwrite(existing, next) {
   );
 }
 
-export async function updateFinalScores({ resultsPath = defaultResultsPath, apiKey = process.env.SERPAPI_KEY } = {}) {
+export async function updateFinalScores({
+  resultsPath = defaultResultsPath,
+  boardPath = defaultBoardPath,
+  apiKey = process.env.SERPAPI_KEY
+} = {}) {
   if (!apiKey) {
     throw new Error("SERPAPI_KEY is required.");
   }
 
-  const current = parseJsonContent(await readFile(resultsPath, "utf8"));
+  const original = parseJsonContent(await readFile(resultsPath, "utf8"));
+  const seedBoard = parseJsonContent(await readFile(boardPath, "utf8"));
+  const current = hydrateBracketResults(original, seedBoard);
   const now = new Date();
   const matchesToCheck = current.matches.filter((match) => shouldCheckMatch(match, now));
   const updatedMatches = current.matches.map((match) => ({ ...match }));
   const summary = { checked: 0, updated: 0, skipped: 0, issues: [] };
+  const hydratedResultsChanged = JSON.stringify(current.matches) !== JSON.stringify(original.matches);
 
   console.log(`[start] Checking ${matchesToCheck.length} eligible matches.`);
 
@@ -320,7 +400,7 @@ export async function updateFinalScores({ resultsPath = defaultResultsPath, apiK
     }
   }
 
-  if (summary.updated > 0) {
+  if (summary.updated > 0 || hydratedResultsChanged) {
     const next = {
       ...current,
       lastUpdated: new Date().toISOString(),

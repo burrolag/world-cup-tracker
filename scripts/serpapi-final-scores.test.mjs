@@ -4,6 +4,7 @@ import path from "node:path";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   displayTeamName,
+  hydrateBracketResults,
   parseJsonContent,
   parseSerpApiFinalScore,
   shouldCheckMatch,
@@ -135,11 +136,67 @@ describe("displayTeamName", () => {
   });
 });
 
+describe("hydrateBracketResults", () => {
+  it("uses seed bracket links to advance completed feeder winners into later matches", () => {
+    const hydrated = hydrateBracketResults(
+      {
+        matches: [
+          {
+            id: "m83",
+            homeTeamId: "portugal",
+            awayTeamId: "croatia",
+            homeScore: 2,
+            awayScore: 1,
+            winnerTeamId: "portugal",
+            date: "2026-07-02",
+            status: "Complete"
+          },
+          {
+            id: "m84",
+            homeTeamId: "spain",
+            awayTeamId: "austria",
+            homeScore: 3,
+            awayScore: 0,
+            winnerTeamId: "spain",
+            date: "2026-07-02",
+            status: "Complete"
+          },
+          {
+            id: "m93",
+            homeTeamId: "",
+            awayTeamId: "",
+            homeScore: null,
+            awayScore: null,
+            winnerTeamId: null,
+            date: "2026-07-06",
+            status: "SCHEDULED"
+          }
+        ]
+      },
+      {
+        matches: [
+          { id: "m83", nextMatchId: "m93", nextMatchSide: "home", round: "round32", slot: 5, label: "Match 83" },
+          { id: "m84", nextMatchId: "m93", nextMatchSide: "away", round: "round32", slot: 6, label: "Match 84" },
+          { id: "m93", round: "round16", slot: 3, label: "Match 93" }
+        ]
+      }
+    );
+
+    expect(hydrated.matches.find((candidate) => candidate.id === "m93")).toMatchObject({
+      homeTeamId: "portugal",
+      awayTeamId: "spain",
+      round: "round16",
+      slot: 3
+    });
+  });
+});
+
 describe("updateFinalScores", () => {
   it("does not rewrite the results file when no match is updated", async () => {
     const dir = await mkdtemp(path.join(os.tmpdir(), "world-cup-scores-"));
     tempDirs.push(dir);
     const resultsPath = path.join(dir, "results.json");
+    const boardPath = path.join(dir, "board.json");
     const content = JSON.stringify(
       {
         lastUpdated: "2026-07-04T00:00:00.000Z",
@@ -162,6 +219,7 @@ describe("updateFinalScores", () => {
     );
 
     await writeFile(resultsPath, content);
+    await writeFile(boardPath, content);
     vi.stubGlobal(
       "fetch",
       vi.fn(async () => ({
@@ -178,7 +236,7 @@ describe("updateFinalScores", () => {
       }))
     );
 
-    const summary = await updateFinalScores({ resultsPath, apiKey: "test-key" });
+    const summary = await updateFinalScores({ resultsPath, boardPath, apiKey: "test-key" });
 
     expect(summary).toMatchObject({ checked: 1, updated: 0, skipped: 1 });
     expect(await readFile(resultsPath, "utf8")).toBe(content);
