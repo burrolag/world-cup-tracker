@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-07T19:25:16.085Z",
+  "lastUpdated": "2026-07-07T23:36:18.514Z",
   "source": "SerpApi Google Sports Results",
   "matches": [
     {
@@ -391,14 +391,16 @@
       "slot": 8,
       "homeTeamId": "switzerland",
       "awayTeamId": "colombia",
-      "homeScore": null,
-      "awayScore": null,
-      "winnerTeamId": null,
+      "homeScore": 0,
+      "awayScore": 0,
+      "winnerTeamId": "switzerland",
       "date": "2026-07-07",
       "nextMatchId": "m100",
       "nextMatchSide": "away",
-      "status": "SCHEDULED",
-      "updatedAt": null
+      "status": "Complete",
+      "updatedAt": "2026-07-07T23:36:18.513Z",
+      "homePenaltyScore": 4,
+      "awayPenaltyScore": 3
     },
     {
       "id": "m97",
