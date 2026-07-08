@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-07T23:36:18.514Z",
+  "lastUpdated": "2026-07-08T01:10:44.168Z",
   "source": "SerpApi Google Sports Results",
   "matches": [
     {
@@ -456,7 +456,7 @@
       "label": "Match 100",
       "slot": 4,
       "homeTeamId": "argentina",
-      "awayTeamId": "",
+      "awayTeamId": "switzerland",
       "homeScore": null,
       "awayScore": null,
       "winnerTeamId": null,
