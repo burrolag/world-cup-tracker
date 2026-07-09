@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-08T01:10:44.168Z",
+  "lastUpdated": "2026-07-09T22:43:05.571Z",
   "source": "SerpApi Google Sports Results",
   "matches": [
     {
@@ -409,14 +409,16 @@
       "slot": 1,
       "homeTeamId": "france",
       "awayTeamId": "morocco",
-      "homeScore": null,
-      "awayScore": null,
-      "winnerTeamId": null,
+      "homeScore": 2,
+      "awayScore": 0,
+      "winnerTeamId": "france",
       "date": "2026-07-09",
       "nextMatchId": "m101",
       "nextMatchSide": "home",
-      "status": "SCHEDULED",
-      "updatedAt": null
+      "status": "Complete",
+      "updatedAt": "2026-07-09T22:43:05.570Z",
+      "homePenaltyScore": null,
+      "awayPenaltyScore": null
     },
     {
       "id": "m98",
