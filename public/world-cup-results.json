@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-09T22:43:05.571Z",
+  "lastUpdated": "2026-07-09T23:50:07.447Z",
   "source": "SerpApi Google Sports Results",
   "matches": [
     {
@@ -473,7 +473,7 @@
       "round": "semifinal",
       "label": "Match 101",
       "slot": 1,
-      "homeTeamId": "",
+      "homeTeamId": "france",
       "awayTeamId": "",
       "homeScore": null,
       "awayScore": null,
