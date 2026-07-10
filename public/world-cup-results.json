@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-09T23:50:07.447Z",
+  "lastUpdated": "2026-07-10T21:19:56.175Z",
   "source": "SerpApi Google Sports Results",
   "matches": [
     {
@@ -427,14 +427,16 @@
       "slot": 2,
       "homeTeamId": "spain",
       "awayTeamId": "belgium",
-      "homeScore": null,
-      "awayScore": null,
-      "winnerTeamId": null,
+      "homeScore": 2,
+      "awayScore": 1,
+      "winnerTeamId": "spain",
       "date": "2026-07-10",
       "nextMatchId": "m101",
       "nextMatchSide": "away",
-      "status": "SCHEDULED",
-      "updatedAt": null
+      "status": "Complete",
+      "updatedAt": "2026-07-10T21:19:52.833Z",
+      "homePenaltyScore": null,
+      "awayPenaltyScore": null
     },
     {
       "id": "m99",
