@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-10T21:19:56.175Z",
+  "lastUpdated": "2026-07-10T22:40:29.636Z",
   "source": "SerpApi Google Sports Results",
   "matches": [
     {
@@ -476,7 +476,7 @@
       "label": "Match 101",
       "slot": 1,
       "homeTeamId": "france",
-      "awayTeamId": "",
+      "awayTeamId": "spain",
       "homeScore": null,
       "awayScore": null,
       "winnerTeamId": null,
