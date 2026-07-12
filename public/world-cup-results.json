@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-10T22:40:29.636Z",
+  "lastUpdated": "2026-07-12T09:17:45.757Z",
   "source": "SerpApi Google Sports Results",
   "matches": [
     {
@@ -491,8 +491,8 @@
       "round": "semifinal",
       "label": "Match 102",
       "slot": 2,
-      "homeTeamId": "",
-      "awayTeamId": "",
+      "homeTeamId": "england",
+      "awayTeamId": "argentina",
       "homeScore": null,
       "awayScore": null,
       "winnerTeamId": null,
