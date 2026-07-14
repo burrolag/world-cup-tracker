@@ -477,13 +477,13 @@
       "slot": 1,
       "homeTeamId": "france",
       "awayTeamId": "spain",
-      "homeScore": null,
-      "awayScore": null,
-      "winnerTeamId": null,
+      "homeScore": 0,
+      "awayScore": 2,
+      "winnerTeamId": "spain",
       "date": "2026-07-14",
       "nextMatchId": "m104",
       "nextMatchSide": "home",
-      "status": "SCHEDULED",
+      "status": "Complete",
       "updatedAt": null
     },
     {
