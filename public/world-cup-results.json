@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-15T21:13:14.143Z",
+  "lastUpdated": "2026-07-15T21:14:37.512Z",
   "source": "SerpApi Google Sports Results",
   "matches": [
     {
@@ -510,7 +510,7 @@
       "label": "Final",
       "slot": 1,
       "homeTeamId": "spain",
-      "awayTeamId": "",
+      "awayTeamId": "argentina",
       "homeScore": null,
       "awayScore": null,
       "winnerTeamId": null,
