@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-14T21:38:41.986Z",
+  "lastUpdated": "2026-07-15T21:13:14.143Z",
   "source": "SerpApi Google Sports Results",
   "matches": [
     {
@@ -493,14 +493,16 @@
       "slot": 2,
       "homeTeamId": "england",
       "awayTeamId": "argentina",
-      "homeScore": null,
-      "awayScore": null,
-      "winnerTeamId": null,
+      "homeScore": 1,
+      "awayScore": 2,
+      "winnerTeamId": "argentina",
       "date": "2026-07-15",
       "nextMatchId": "m104",
       "nextMatchSide": "away",
-      "status": "SCHEDULED",
-      "updatedAt": null
+      "status": "Complete",
+      "updatedAt": "2026-07-15T21:13:14.143Z",
+      "homePenaltyScore": null,
+      "awayPenaltyScore": null
     },
     {
       "id": "m104",
