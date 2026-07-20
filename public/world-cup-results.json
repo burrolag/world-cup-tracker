@@ -1,6 +1,6 @@
 {
-  "lastUpdated": "2026-07-15T21:14:37.512Z",
-  "source": "SerpApi Google Sports Results",
+  "lastUpdated": "2026-07-20T00:00:00.000Z",
+  "source": "FIFA final report",
   "matches": [
     {
       "id": "m74",
@@ -515,8 +515,8 @@
       "awayScore": 0,
       "winnerTeamId": "spain",
       "date": "2026-07-19",
-      "status": "Completed",
-      "updatedAt": null
+      "status": "Complete",
+      "updatedAt": "2026-07-20T00:00:00.000Z"
     }
   ]
 }

@@ -24,17 +24,13 @@ npm.cmd run test
 npm.cmd run build
 ```
 
-## Automatic scores
+## Final results
 
-The published GitHub Pages app loads official scores from `public/world-cup-results.json` on startup and when **Refresh Scores** is clicked. A scheduled GitHub Action refreshes that JSON file from SerpApi Google Sports Results, commits any changes, and starts the normal GitHub Pages deploy workflow.
+The published GitHub Pages app loads final scores from `public/world-cup-results.json` on startup and when **Refresh Scores** is clicked. The 2026 tournament is complete, so the scheduled SerpApi score search has been disabled.
 
-To enable automatic updates in GitHub:
+The final is saved as Spain 1-0 Argentina, with Spain as the World Cup winner.
 
-1. Create a SerpApi API key.
-2. In the GitHub repository, add a repository secret named `SERPAPI_KEY`.
-3. Keep GitHub Actions enabled. The workflow in `.github/workflows/update-results.yml` runs every 30 minutes and can also be started manually.
-
-Manual local refresh:
+Manual local refresh remains available for archival/debugging only:
 
 ```powershell
 $env:SERPAPI_KEY="your-serpapi-key"
@@ -53,4 +49,4 @@ Only matches that started more than two hours ago and are not complete are check
 
 The app starts from the checked-in seed data in `src/data/seed.ts` and applies hosted results from `public/world-cup-results.json`.
 
-The default seed is the July 1, 2026 knockout bracket snapshot, including completed Round of 32 results available at that point. Later-round teams automatically fill in when you enter a winner for the prior match.
+The default seed and hosted results now include the completed knockout bracket through the final.
