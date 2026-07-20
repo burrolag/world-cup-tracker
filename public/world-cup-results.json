@@ -511,11 +511,11 @@
       "slot": 1,
       "homeTeamId": "spain",
       "awayTeamId": "argentina",
-      "homeScore": null,
-      "awayScore": null,
-      "winnerTeamId": null,
+      "homeScore": 1,
+      "awayScore": 0,
+      "winnerTeamId": "spain",
       "date": "2026-07-19",
-      "status": "SCHEDULED",
+      "status": "Completed",
       "updatedAt": null
     }
   ]
